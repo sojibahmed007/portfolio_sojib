@@ -128,16 +128,52 @@ const App = () => {
 
       <section id="skills" className="container">
         <h2 className="section-title text-white text-center font-bold text-6xl mt-6 mb-6 ">Technical Skills</h2>
-        <div className="skills-grid">
-          <div className="skill-tag"><Code2 style={{ color: '#feca57' }} /> <span>JavaScript ES6+</span></div>
-          <div className="skill-tag"><Globe style={{ color: '#48dbfb' }} /> <span>HTML5 / CSS3</span></div>
-          <div className="skill-tag"><Terminal style={{ color: '#ff9ff3' }} /> <span>Web APIs & Fetch API</span></div>
-          <div className="skill-tag"><Smartphone style={{ color: '#54a0ff' }} /> <span>Responsive UI Design</span></div>
-          <div className="skill-tag"><Package style={{ color: '#1dd1a1' }} /> <span>Git & GitHub</span></div>
-          <div className="skill-tag"><Layers style={{ color: '#ff6b6b' }} /> <span>CSS Grid & Flexbox</span></div>
-          <div className="skill-tag"><Layout style={{ color: '#5f27cd' }} /> <span>UI/UX Architecture</span></div>
-          <div className="skill-tag"><Palette style={{ color: '#ff9f43' }} /> <span>Tailwind CSS</span></div>
-        </div>
+        <motion.div
+          className="skills-grid"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{
+            visible: { transition: { staggerChildren: 0.1 } }
+          }}
+        >
+          {[
+            { name: "JavaScript ES6+", icon: <Code2 />, color: '#feca57' },
+            { name: "HTML5 / CSS3", icon: <Globe />, color: '#48dbfb' },
+            { name: "Web APIs & Fetch API", icon: <Terminal />, color: '#ff9ff3' },
+            { name: "Responsive UI Design", icon: <Smartphone />, color: '#54a0ff' },
+            { name: "Git & GitHub", icon: <Package />, color: '#1dd1a1' },
+            { name: "CSS Grid & Flexbox", icon: <Layers />, color: '#ff6b6b' },
+            { name: "UI/UX Architecture", icon: <Layout />, color: '#5f27cd' },
+            { name: "Tailwind CSS", icon: <Palette />, color: '#ff9f43' }
+          ].map((skill, index) => (
+            <motion.div
+              key={index}
+              className="skill-tag"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              animate={{
+                y: [0, -10, 0],
+                transition: {
+                  duration: 3 + Math.random() * 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: Math.random() * 2
+                }
+              }}
+              whileHover={{
+                scale: 1.1,
+                y: -15,
+                transition: { duration: 0.2 }
+              }}
+            >
+              {React.cloneElement(skill.icon, { style: { color: skill.color } })}
+              <span>{skill.name}</span>
+            </motion.div>
+          ))}
+        </motion.div>
       </section>
 
       <section id="projects" className="container ">
