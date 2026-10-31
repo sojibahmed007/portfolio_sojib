@@ -251,7 +251,7 @@ body {
   margin-bottom: 1.5rem;
 }
 
-/* Status Pill with Toggle Option */
+/* Hero Status Pill */
 .status-pill {
   display: inline-flex;
   align-items: center;
@@ -260,50 +260,16 @@ body {
   border-radius: 9999px;
   font-size: 0.85rem;
   font-weight: 600;
-  cursor: pointer;
-  background: none;
-  border: 1px solid;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.status-open {
   background: rgba(16, 185, 129, 0.12);
-  border-color: rgba(16, 185, 129, 0.35);
+  border: 1px solid rgba(16, 185, 129, 0.35);
   color: #34d399;
-}
-
-.status-open:hover {
-  background: rgba(16, 185, 129, 0.2);
-  border-color: #34d399;
-  transform: translateY(-1px);
-}
-
-.status-closed {
-  background: rgba(245, 158, 11, 0.12);
-  border-color: rgba(245, 158, 11, 0.35);
-  color: #fbbf24;
-}
-
-.status-closed:hover {
-  background: rgba(245, 158, 11, 0.2);
-  border-color: #fbbf24;
-  transform: translateY(-1px);
-}
-
-.status-switch-tag {
-  display: flex;
-  align-items: center;
-  opacity: 0.7;
-  margin-left: 0.2rem;
+  letter-spacing: 0.2px;
 }
 
 .pulse-indicator {
   width: 9px;
   height: 9px;
   border-radius: 50%;
-}
-
-.pulse-green {
   background-color: #10b981;
   box-shadow: 0 0 10px #10b981;
   animation: pulseGreen 2s infinite;
@@ -313,18 +279,6 @@ body {
   0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
   70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
   100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-}
-
-.pulse-amber {
-  background-color: #f59e0b;
-  box-shadow: 0 0 10px #f59e0b;
-  animation: pulseAmber 2s infinite;
-}
-
-@keyframes pulseAmber {
-  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
-  70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(245, 158, 11, 0); }
-  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
 }
 
 .hero-heading {
@@ -866,55 +820,14 @@ body {
 }
 
 /* -------------------------------------------------------------
-   REDESIGNED & BEAUTIFUL TECHNICAL SKILLS SECTION
+   TECHNICAL SKILLS SECTION
 ------------------------------------------------------------- */
-.tools-ribbon-wrap {
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-}
-
-.tools-ribbon {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.75rem;
-  max-width: 900px;
-}
-
-.tool-ribbon-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.45rem 1rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--panel-border);
-  border-radius: 9999px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #e2e8f0;
-  transition: all 0.25s ease;
-}
-
-.tool-ribbon-item:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(56, 189, 248, 0.4);
-  transform: translateY(-2px);
-  color: #ffffff;
-}
-
-.tool-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  box-shadow: 0 0 8px currentColor;
-}
-
 /* Skills Bento Grid */
 .skills-bento-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 1.5rem;
+  margin-top: 2rem;
 }
 
 .skill-bento-card {
@@ -972,7 +885,7 @@ body {
   color: var(--text-muted);
 }
 
-/* Skill Chips */
+/* Skill Chips (Clean & Elegant) */
 .skill-chips-wrap {
   display: flex;
   flex-wrap: wrap;
@@ -982,17 +895,17 @@ body {
 .skill-chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.85rem;
-  background: rgba(255, 255, 255, 0.03);
+  gap: 0.55rem;
+  padding: 0.55rem 0.95rem;
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 0.65rem;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .skill-chip:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(255, 255, 255, 0.25);
   transform: translateY(-2px);
 }
 
@@ -1001,18 +914,9 @@ body {
 }
 
 .skill-chip-name {
-  font-size: 0.88rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 500;
   color: #f1f5f9;
-}
-
-.skill-chip-tag {
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 0.15rem 0.45rem;
-  border-radius: 9999px;
 }
 
 /* Education & Extracurriculars Grid */

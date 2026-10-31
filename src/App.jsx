@@ -25,8 +25,6 @@ import {
   PhoneCall,
   MapPin,
   Download,
-  ToggleLeft,
-  ToggleRight,
   Target,
   Cpu,
   FileText,
@@ -35,8 +33,6 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 
 const App = () => {
-  // Toggle between Open to Work and Currently Employed
-  const [isOpenToWork, setIsOpenToWork] = useState(true);
   const [activeTab, setActiveTab] = useState('all');
 
   // Stats: 3 High-Impact Cards (Removed QA Test Suites as requested)
@@ -44,19 +40,6 @@ const App = () => {
     { label: 'Defect Cards Verified', value: '116+', sub: 'Trello Staging & Live' },
     { label: 'Internship Experience', value: '3 Mos', sub: 'Appifylab (LMS SaaS)' },
     { label: 'Academic CGPA', value: '3.59', sub: 'Leading University (CSE)' }
-  ];
-
-  const toolsRibbon = [
-    { name: 'Postman', color: '#ff6c37' },
-    { name: 'Apple TestFlight', color: '#0071e3' },
-    { name: 'Playwright', color: '#45ba4b' },
-    { name: 'Trello', color: '#0079bf' },
-    { name: 'Chrome DevTools', color: '#4285f4' },
-    { name: 'Google Sheets', color: '#0f9d58' },
-    { name: 'Git & GitHub', color: '#f05032' },
-    { name: 'TypeScript', color: '#3178c6' },
-    { name: 'JavaScript ES6+', color: '#f7df1e' },
-    { name: 'REST APIs', color: '#8b5cf6' }
   ];
 
   const projects = [
@@ -149,7 +132,7 @@ const App = () => {
     }
   ];
 
-  // Enhanced & Beautiful Technical Skills Architecture
+  // Enhanced & Beautiful Technical Skills Architecture (Clean, No Cluttered Badges)
   const skillCategories = [
     {
       id: 'qa',
@@ -159,14 +142,14 @@ const App = () => {
       icon: <ShieldCheck size={26} className="text-cyan-400" />,
       featured: true,
       skills: [
-        { name: 'Manual Functional Testing', tag: 'Core Discipline' },
-        { name: 'Regression & Retesting', tag: 'High Volume' },
-        { name: 'Boundary Value Analysis', tag: 'Edge Cases' },
-        { name: 'Smoke & Sanity Testing', tag: 'Build Verification' },
-        { name: 'RTL (Arabic) Localization QA', tag: 'Specialized' },
-        { name: 'Root Cause & Defect Triage', tag: 'Critical' },
-        { name: 'Exploratory & Ad-hoc Testing', tag: 'Intuitive' },
-        { name: 'Cross-Browser UI Consistency', tag: 'Multi-engine' }
+        'Manual Functional Testing',
+        'Regression & Retesting',
+        'Boundary Value Analysis',
+        'Smoke & Sanity Testing',
+        'RTL (Arabic) Localization QA',
+        'Root Cause & Defect Triage',
+        'Exploratory & Ad-hoc Testing',
+        'Cross-Browser UI Consistency'
       ]
     },
     {
@@ -176,11 +159,11 @@ const App = () => {
       accentColor: '#a855f7',
       icon: <Smartphone size={26} className="text-purple-400" />,
       skills: [
-        { name: 'Apple TestFlight iOS Builds', tag: 'Beta QA' },
-        { name: 'Branded Android APKs', tag: 'Release Builds' },
-        { name: 'Deep Link URL Redirection', tag: 'Zero-drop' },
-        { name: 'Mobile Viewport & Gestures', tag: 'Touch/Scroll' },
-        { name: 'Device Hardware Permissions', tag: 'Camera/Mic' }
+        'Apple TestFlight iOS Builds',
+        'Branded Android APKs',
+        'Deep Link URL Redirection',
+        'Mobile Viewport & Gestures',
+        'Device Hardware Permissions (Camera/Mic)'
       ]
     },
     {
@@ -190,11 +173,11 @@ const App = () => {
       accentColor: '#3b82f6',
       icon: <Terminal size={26} className="text-blue-400" />,
       skills: [
-        { name: 'Postman API Testing', tag: 'Collections' },
-        { name: 'REST API Endpoint Testing', tag: 'Request/Response' },
-        { name: 'HTTP Status Codes (404, 422, 500)', tag: 'Triage' },
-        { name: 'JSON Data Structure Validation', tag: 'Payloads' },
-        { name: 'Chrome DevTools Network Panel', tag: 'Headers/Timing' }
+        'Postman API Testing',
+        'REST API Endpoint Testing',
+        'HTTP Status Codes (404, 422, 500)',
+        'JSON Data Structure Validation',
+        'Chrome DevTools Network Panel'
       ]
     },
     {
@@ -204,11 +187,11 @@ const App = () => {
       accentColor: '#10b981',
       icon: <FileSpreadsheet size={26} className="text-emerald-400" />,
       skills: [
-        { name: 'Trello Ticket Lifecycle', tag: '116+ Cards' },
-        { name: 'Test Cases & Test Suites', tag: 'Google Sheets' },
-        { name: 'Bug Life Cycle Management', tag: 'Systematic' },
-        { name: 'Agile & Scrum Methodologies', tag: 'Standups/Sprints' },
-        { name: 'Git & GitHub Version Control', tag: 'Repositories' }
+        'Trello Ticket Lifecycle (116+ Cards)',
+        'Test Cases & Test Suites (Google Sheets)',
+        'Bug Life Cycle Management',
+        'Agile & Scrum Methodologies',
+        'Git & GitHub Version Control'
       ]
     },
     {
@@ -218,11 +201,11 @@ const App = () => {
       accentColor: '#f59e0b',
       icon: <Code2 size={26} className="text-amber-400" />,
       skills: [
-        { name: 'Playwright E2E Automation', tag: 'Framework' },
-        { name: 'TypeScript', tag: 'Strong Typing' },
-        { name: 'JavaScript (ES6+)', tag: 'DOM/Fetch' },
-        { name: 'HTML5 & CSS3 / Tailwind', tag: 'Layout Audits' },
-        { name: 'VS Code & Developer Tooling', tag: 'Workspace' }
+        'Playwright E2E Automation',
+        'TypeScript',
+        'JavaScript (ES6+)',
+        'HTML5 & CSS3 / Tailwind',
+        'VS Code & Developer Tooling'
       ]
     }
   ];
@@ -296,28 +279,12 @@ const App = () => {
 
       {/* Hero Section */}
       <section className="hero-section container">
-        {/* Interactive Availability Toggle */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="hero-badge-wrap"
-        >
-          <button
-            type="button"
-            onClick={() => setIsOpenToWork(!isOpenToWork)}
-            className={`status-pill ${isOpenToWork ? 'status-open' : 'status-closed'}`}
-            title="Click to toggle availability status"
-          >
-            <span className={`pulse-indicator ${isOpenToWork ? 'pulse-green' : 'pulse-amber'}`} />
-            <span className="status-text">
-              {isOpenToWork ? 'Available for SQA Roles (Open to Work)' : 'Currently Employed / Closed to Offers'}
-            </span>
-            <span className="status-switch-tag">
-              {isOpenToWork ? <ToggleRight size={16} /> : <ToggleLeft size={16} />}
-            </span>
-          </button>
-        </motion.div>
+        <div className="hero-badge-wrap">
+          <span className="status-pill">
+            <span className="pulse-indicator" />
+            Available for SQA Engineer &amp; QA Roles
+          </span>
+        </div>
 
         <h1 className="hero-heading">
           Engineering Quality. <br />
@@ -632,18 +599,6 @@ const App = () => {
           <p className="section-subtitle">
             Industry-standard manual testing techniques, mobile lab verifications, API inspection, and modern tooling.
           </p>
-
-          {/* Featured Tools & Technologies Ribbon */}
-          <div className="tools-ribbon-wrap">
-            <div className="tools-ribbon">
-              {toolsRibbon.map((tool, idx) => (
-                <div key={idx} className="tool-ribbon-item">
-                  <span className="tool-dot" style={{ backgroundColor: tool.color }} />
-                  <span>{tool.name}</span>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* Bento Grid Architecture for Skills */}
@@ -667,13 +622,10 @@ const App = () => {
               </div>
 
               <div className="skill-chips-wrap">
-                {cat.skills.map((s, sIdx) => (
+                {cat.skills.map((skillName, sIdx) => (
                   <div key={sIdx} className="skill-chip">
                     <Check size={14} style={{ color: cat.accentColor }} className="skill-chip-check" />
-                    <span className="skill-chip-name">{s.name}</span>
-                    <span className="skill-chip-tag" style={{ color: cat.accentColor, backgroundColor: `${cat.accentColor}12` }}>
-                      {s.tag}
-                    </span>
+                    <span className="skill-chip-name">{skillName}</span>
                   </div>
                 ))}
               </div>
