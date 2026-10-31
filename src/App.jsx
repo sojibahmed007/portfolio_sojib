@@ -144,7 +144,7 @@ const App = () => {
         'An experimental laboratory interface featuring real-time data monitoring components, responsive grid architecture, and interactive layout elements built with modern CSS standards.',
       tech: ['HTML5', 'CSS3', 'Tailwind CSS', 'JavaScript'],
       link: 'https://github.com/sojibahmed007/Living_lab',
-      liveLink: 'https://resplendent-kelpie-dd99b8.netlify.app',
+      liveLink: 'https://phenomenal-jelly-c9b319.netlify.app/',
       liveLabel: 'Live Demo',
       badgeColor: '#10b981',
       icon: <Layers size={24} />
@@ -158,7 +158,7 @@ const App = () => {
         'Interactive web application converting text input into natural speech using the Web Speech API with custom pitch, rate, and multi-voice selection controls.',
       tech: ['JavaScript ES6', 'Web Speech API', 'CSS3'],
       link: 'https://github.com/sojibahmed007/Text_to_Speech',
-      liveLink: 'https://scintillating-pithivier-0ce296.netlify.app',
+      liveLink: 'https://shiny-empanada-31ebc8.netlify.app/',
       liveLabel: 'Live Demo',
       badgeColor: '#06b6d4',
       icon: <Mic2 size={24} />
@@ -172,7 +172,7 @@ const App = () => {
         'An educational web platform designed for English language learning with structured vocabulary modules, intuitive navigation, and accessible UI components.',
       tech: ['HTML5', 'JavaScript ES6', 'CSS3'],
       link: 'https://github.com/sojibahmed007/English_janala',
-      liveLink: 'https://statuesque-tartufo-1ae5df.netlify.app',
+      liveLink: 'https://boisterous-alfajores-1cafaf.netlify.app/',
       liveLabel: 'Live Demo',
       badgeColor: '#3b82f6',
       icon: <BookOpen size={24} />
