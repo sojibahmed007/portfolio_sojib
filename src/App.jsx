@@ -35,9 +35,26 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const App = () => {
   const [activeTab, setActiveTab] = useState('all');
-  const [workStatus, setWorkStatus] = useState('working'); // 'working' | 'open'
+  const [workStatus, setWorkStatus] = useState(() => {
+    try {
+      const saved = localStorage.getItem('sojib_work_status');
+      return saved === 'open' || saved === 'working' ? saved : 'working';
+    } catch {
+      return 'working';
+    }
+  });
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  const handleStatusChange = (newStatus) => {
+    setWorkStatus(newStatus);
+    try {
+      localStorage.setItem('sojib_work_status', newStatus);
+    } catch {
+      // ignore storage errors
+    }
+    setIsDropdownOpen(false);
+  };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -336,10 +353,7 @@ const App = () => {
                   <button
                     type="button"
                     className={`dropdown-menu-item ${workStatus === 'working' ? 'selected' : ''}`}
-                    onClick={() => {
-                      setWorkStatus('working');
-                      setIsDropdownOpen(false);
-                    }}
+                    onClick={() => handleStatusChange('working')}
                     role="option"
                     aria-selected={workStatus === 'working'}
                   >
@@ -351,10 +365,7 @@ const App = () => {
                   <button
                     type="button"
                     className={`dropdown-menu-item ${workStatus === 'open' ? 'selected' : ''}`}
-                    onClick={() => {
-                      setWorkStatus('open');
-                      setIsDropdownOpen(false);
-                    }}
+                    onClick={() => handleStatusChange('open')}
                     role="option"
                     aria-selected={workStatus === 'open'}
                   >
