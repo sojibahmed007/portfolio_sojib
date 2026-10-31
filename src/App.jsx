@@ -42,6 +42,19 @@ const App = () => {
     { label: 'Academic CGPA', value: '3.59', sub: 'Leading University (CSE)' }
   ];
 
+  const toolsRibbon = [
+    { name: 'Postman', icon: <Terminal size={15} />, color: '#ff6c37' },
+    { name: 'Apple TestFlight', icon: <Smartphone size={15} />, color: '#0071e3' },
+    { name: 'Playwright', icon: <Terminal size={15} />, color: '#45ba4b' },
+    { name: 'Trello', icon: <Layout size={15} />, color: '#0079bf' },
+    { name: 'Chrome DevTools', icon: <Globe size={15} />, color: '#4285f4' },
+    { name: 'Google Sheets', icon: <FileSpreadsheet size={15} />, color: '#0f9d58' },
+    { name: 'Git & GitHub', icon: <Github size={15} />, color: '#f05032' },
+    { name: 'TypeScript', icon: <Code2 size={15} />, color: '#3178c6' },
+    { name: 'JavaScript ES6+', icon: <Code2 size={15} />, color: '#f7df1e' },
+    { name: 'REST APIs', icon: <Layers size={15} />, color: '#8b5cf6' }
+  ];
+
   const projects = [
     {
       id: 1,
@@ -132,7 +145,7 @@ const App = () => {
     }
   ];
 
-  // Enhanced & Beautiful Technical Skills Architecture (Clean, No Cluttered Badges)
+  // Enhanced & Beautiful Technical Skills Architecture (With Skill Logos)
   const skillCategories = [
     {
       id: 'qa',
@@ -142,14 +155,14 @@ const App = () => {
       icon: <ShieldCheck size={26} className="text-cyan-400" />,
       featured: true,
       skills: [
-        'Manual Functional Testing',
-        'Regression & Retesting',
-        'Boundary Value Analysis',
-        'Smoke & Sanity Testing',
-        'RTL (Arabic) Localization QA',
-        'Root Cause & Defect Triage',
-        'Exploratory & Ad-hoc Testing',
-        'Cross-Browser UI Consistency'
+        { name: 'Manual Functional Testing', icon: <ShieldCheck size={16} />, color: '#38bdf8' },
+        { name: 'Regression & Retesting', icon: <Bug size={16} />, color: '#f43f5e' },
+        { name: 'Boundary Value Analysis', icon: <Target size={16} />, color: '#f59e0b' },
+        { name: 'Smoke & Sanity Testing', icon: <CheckCircle2 size={16} />, color: '#10b981' },
+        { name: 'RTL (Arabic) Localization QA', icon: <Globe size={16} />, color: '#06b6d4' },
+        { name: 'Root Cause & Defect Triage', icon: <Cpu size={16} />, color: '#a855f7' },
+        { name: 'Exploratory & Ad-hoc Testing', icon: <Sparkles size={16} />, color: '#eab308' },
+        { name: 'Cross-Browser UI Consistency', icon: <Layout size={16} />, color: '#3b82f6' }
       ]
     },
     {
@@ -159,11 +172,11 @@ const App = () => {
       accentColor: '#a855f7',
       icon: <Smartphone size={26} className="text-purple-400" />,
       skills: [
-        'Apple TestFlight iOS Builds',
-        'Branded Android APKs',
-        'Deep Link URL Redirection',
-        'Mobile Viewport & Gestures',
-        'Device Hardware Permissions (Camera/Mic)'
+        { name: 'Apple TestFlight iOS Builds', icon: <Smartphone size={16} />, color: '#0071e3' },
+        { name: 'Branded Android APKs', icon: <Smartphone size={16} />, color: '#3ddc84' },
+        { name: 'Deep Link URL Redirection', icon: <ExternalLink size={16} />, color: '#a855f7' },
+        { name: 'Mobile Viewport & Gestures', icon: <Smartphone size={16} />, color: '#38bdf8' },
+        { name: 'Device Hardware Permissions', icon: <ShieldCheck size={16} />, color: '#f59e0b' }
       ]
     },
     {
@@ -173,11 +186,11 @@ const App = () => {
       accentColor: '#3b82f6',
       icon: <Terminal size={26} className="text-blue-400" />,
       skills: [
-        'Postman API Testing',
-        'REST API Endpoint Testing',
-        'HTTP Status Codes (404, 422, 500)',
-        'JSON Data Structure Validation',
-        'Chrome DevTools Network Panel'
+        { name: 'Postman API Testing', icon: <Terminal size={16} />, color: '#ff6c37' },
+        { name: 'REST API Endpoint Testing', icon: <Layers size={16} />, color: '#8b5cf6' },
+        { name: 'HTTP Status Codes (404, 422, 500)', icon: <Terminal size={16} />, color: '#ef4444' },
+        { name: 'JSON Data Structure Validation', icon: <FileText size={16} />, color: '#10b981' },
+        { name: 'Chrome DevTools Network Panel', icon: <Globe size={16} />, color: '#4285f4' }
       ]
     },
     {
@@ -187,11 +200,11 @@ const App = () => {
       accentColor: '#10b981',
       icon: <FileSpreadsheet size={26} className="text-emerald-400" />,
       skills: [
-        'Trello Ticket Lifecycle (116+ Cards)',
-        'Test Cases & Test Suites (Google Sheets)',
-        'Bug Life Cycle Management',
-        'Agile & Scrum Methodologies',
-        'Git & GitHub Version Control'
+        { name: 'Trello Ticket Lifecycle (116+ Cards)', icon: <Layout size={16} />, color: '#0079bf' },
+        { name: 'Test Cases & Test Suites (Google Sheets)', icon: <FileSpreadsheet size={16} />, color: '#0f9d58' },
+        { name: 'Bug Life Cycle Management', icon: <Bug size={16} />, color: '#f43f5e' },
+        { name: 'Agile & Scrum Methodologies', icon: <Briefcase size={16} />, color: '#6366f1' },
+        { name: 'Git & GitHub Version Control', icon: <Github size={16} />, color: '#f05032' }
       ]
     },
     {
@@ -201,11 +214,11 @@ const App = () => {
       accentColor: '#f59e0b',
       icon: <Code2 size={26} className="text-amber-400" />,
       skills: [
-        'Playwright E2E Automation',
-        'TypeScript',
-        'JavaScript (ES6+)',
-        'HTML5 & CSS3 / Tailwind',
-        'VS Code & Developer Tooling'
+        { name: 'Playwright E2E Automation', icon: <Terminal size={16} />, color: '#45ba4b' },
+        { name: 'TypeScript', icon: <Code2 size={16} />, color: '#3178c6' },
+        { name: 'JavaScript (ES6+)', icon: <Code2 size={16} />, color: '#f7df1e' },
+        { name: 'HTML5 & CSS3 / Tailwind', icon: <Globe size={16} />, color: '#e34f26' },
+        { name: 'VS Code & Developer Tooling', icon: <Code2 size={16} />, color: '#007acc' }
       ]
     }
   ];
@@ -282,7 +295,7 @@ const App = () => {
         <div className="hero-badge-wrap">
           <span className="status-pill">
             <span className="pulse-indicator" />
-            Available for SQA Engineer &amp; QA Roles
+            Currently Working as SQA Engineer
           </span>
         </div>
 
@@ -599,6 +612,20 @@ const App = () => {
           <p className="section-subtitle">
             Industry-standard manual testing techniques, mobile lab verifications, API inspection, and modern tooling.
           </p>
+
+          {/* Featured Tools & Technologies Badge Ribbon */}
+          <div className="tools-ribbon-wrap">
+            <div className="tools-ribbon">
+              {toolsRibbon.map((tool, idx) => (
+                <div key={idx} className="tool-ribbon-item">
+                  <span className="tool-ribbon-icon" style={{ color: tool.color }}>
+                    {tool.icon}
+                  </span>
+                  <span>{tool.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Bento Grid Architecture for Skills */}
@@ -622,10 +649,12 @@ const App = () => {
               </div>
 
               <div className="skill-chips-wrap">
-                {cat.skills.map((skillName, sIdx) => (
+                {cat.skills.map((s, sIdx) => (
                   <div key={sIdx} className="skill-chip">
-                    <Check size={14} style={{ color: cat.accentColor }} className="skill-chip-check" />
-                    <span className="skill-chip-name">{skillName}</span>
+                    <span className="skill-chip-icon" style={{ color: s.color }}>
+                      {s.icon}
+                    </span>
+                    <span className="skill-chip-name">{s.name}</span>
                   </div>
                 ))}
               </div>
