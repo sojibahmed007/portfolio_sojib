@@ -29,12 +29,15 @@ import {
   Cpu,
   FileText,
   Check,
-  ChevronDown
+  ChevronDown,
+  Menu,
+  X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const App = () => {
   const [activeTab, setActiveTab] = useState('all');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [workStatus, setWorkStatus] = useState(() => {
     try {
       const saved = localStorage.getItem('sojib_work_status');
@@ -302,7 +305,8 @@ const App = () => {
             </div>
           </a>
 
-          <div className="nav-links">
+          {/* Desktop Nav Links */}
+          <div className="nav-links desktop-nav">
             <a href="#about">About</a>
             <a href="#experience">Experience</a>
             <a href="#projects">Work &amp; QA</a>
@@ -318,7 +322,59 @@ const App = () => {
               <Download size={14} /> Resume (PDF)
             </a>
           </div>
+
+          {/* Mobile Hamburger Button */}
+          <button
+            type="button"
+            className="mobile-menu-toggle"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle navigation menu"
+            aria-expanded={isMobileMenuOpen}
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </nav>
+
+        {/* Mobile Navigation Drawer */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.25, ease: 'easeInOut' }}
+              className="mobile-nav-drawer"
+            >
+              <div className="mobile-nav-links">
+                <a href="#about" onClick={() => setIsMobileMenuOpen(false)}>
+                  About
+                </a>
+                <a href="#experience" onClick={() => setIsMobileMenuOpen(false)}>
+                  Experience
+                </a>
+                <a href="#projects" onClick={() => setIsMobileMenuOpen(false)}>
+                  Work &amp; QA
+                </a>
+                <a href="#skills" onClick={() => setIsMobileMenuOpen(false)}>
+                  Skills
+                </a>
+                <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
+                  Contact
+                </a>
+                <a
+                  href="/Sojib_Ahmed_SQA_Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  download="Sojib_Ahmed_SQA_Resume.pdf"
+                  className="mobile-cv-btn"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Download size={16} /> Resume (PDF)
+                </a>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       {/* Hero Section */}
