@@ -29,7 +29,8 @@ import {
   ToggleRight,
   Target,
   Cpu,
-  FileText
+  FileText,
+  Check
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -38,11 +39,24 @@ const App = () => {
   const [isOpenToWork, setIsOpenToWork] = useState(true);
   const [activeTab, setActiveTab] = useState('all');
 
+  // Stats: 3 High-Impact Cards (Removed QA Test Suites as requested)
   const stats = [
     { label: 'Defect Cards Verified', value: '116+', sub: 'Trello Staging & Live' },
     { label: 'Internship Experience', value: '3 Mos', sub: 'Appifylab (LMS SaaS)' },
-    { label: 'QA Test Suites', value: '7+', sub: 'Google Sheets & Docs' },
     { label: 'Academic CGPA', value: '3.59', sub: 'Leading University (CSE)' }
+  ];
+
+  const toolsRibbon = [
+    { name: 'Postman', color: '#ff6c37' },
+    { name: 'Apple TestFlight', color: '#0071e3' },
+    { name: 'Playwright', color: '#45ba4b' },
+    { name: 'Trello', color: '#0079bf' },
+    { name: 'Chrome DevTools', color: '#4285f4' },
+    { name: 'Google Sheets', color: '#0f9d58' },
+    { name: 'Git & GitHub', color: '#f05032' },
+    { name: 'TypeScript', color: '#3178c6' },
+    { name: 'JavaScript ES6+', color: '#f7df1e' },
+    { name: 'REST APIs', color: '#8b5cf6' }
   ];
 
   const projects = [
@@ -135,62 +149,80 @@ const App = () => {
     }
   ];
 
+  // Enhanced & Beautiful Technical Skills Architecture
   const skillCategories = [
     {
-      title: 'Software Testing & Methodologies',
-      icon: <ShieldCheck size={20} className="text-cyan-400" />,
+      id: 'qa',
+      title: 'Manual & Functional QA Methodologies',
+      subtitle: 'Comprehensive Test Design, Execution & Validation',
+      accentColor: '#38bdf8',
+      icon: <ShieldCheck size={26} className="text-cyan-400" />,
+      featured: true,
       skills: [
-        'Manual Functional Testing',
-        'Regression & Retesting',
-        'Smoke & Sanity Testing',
-        'Boundary Value Analysis',
-        'RTL (Arabic) Localization QA',
-        'Root Cause & Defect Triage'
+        { name: 'Manual Functional Testing', tag: 'Core Discipline' },
+        { name: 'Regression & Retesting', tag: 'High Volume' },
+        { name: 'Boundary Value Analysis', tag: 'Edge Cases' },
+        { name: 'Smoke & Sanity Testing', tag: 'Build Verification' },
+        { name: 'RTL (Arabic) Localization QA', tag: 'Specialized' },
+        { name: 'Root Cause & Defect Triage', tag: 'Critical' },
+        { name: 'Exploratory & Ad-hoc Testing', tag: 'Intuitive' },
+        { name: 'Cross-Browser UI Consistency', tag: 'Multi-engine' }
       ]
     },
     {
-      title: 'Mobile QA & Platforms',
-      icon: <Smartphone size={20} className="text-blue-400" />,
+      id: 'mobile',
+      title: 'Mobile QA & Multi-Platform Testing',
+      subtitle: 'Native App & Mobile Browser Verification',
+      accentColor: '#a855f7',
+      icon: <Smartphone size={26} className="text-purple-400" />,
       skills: [
-        'iOS (Apple TestFlight Builds)',
-        'Android (Branded APK Testing)',
-        'Deep Link URL Verification',
-        'Mobile Viewport & Gesture QA',
-        'Permission Validations (Camera/Mic)'
+        { name: 'Apple TestFlight iOS Builds', tag: 'Beta QA' },
+        { name: 'Branded Android APKs', tag: 'Release Builds' },
+        { name: 'Deep Link URL Redirection', tag: 'Zero-drop' },
+        { name: 'Mobile Viewport & Gestures', tag: 'Touch/Scroll' },
+        { name: 'Device Hardware Permissions', tag: 'Camera/Mic' }
       ]
     },
     {
-      title: 'API Testing & Network Analysis',
-      icon: <Terminal size={20} className="text-purple-400" />,
+      id: 'api',
+      title: 'API Testing & Network Inspection',
+      subtitle: 'RESTful Payload & Status Verification',
+      accentColor: '#3b82f6',
+      icon: <Terminal size={26} className="text-blue-400" />,
       skills: [
-        'Postman API Testing',
-        'REST API Endpoint Verification',
-        'HTTP Status Codes (404, 422, 500)',
-        'JSON Request/Response Validation',
-        'Chrome DevTools Network Inspection'
+        { name: 'Postman API Testing', tag: 'Collections' },
+        { name: 'REST API Endpoint Testing', tag: 'Request/Response' },
+        { name: 'HTTP Status Codes (404, 422, 500)', tag: 'Triage' },
+        { name: 'JSON Data Structure Validation', tag: 'Payloads' },
+        { name: 'Chrome DevTools Network Panel', tag: 'Headers/Timing' }
       ]
     },
     {
-      title: 'Test Management & Tools',
-      icon: <FileSpreadsheet size={20} className="text-emerald-400" />,
+      id: 'management',
+      title: 'Defect & Test Management',
+      subtitle: 'Tracking Ecosystem & Agile Workflows',
+      accentColor: '#10b981',
+      icon: <FileSpreadsheet size={26} className="text-emerald-400" />,
       skills: [
-        'Trello (116+ Defect Cards Tracked)',
-        'Test Cases & Suites (Google Sheets)',
-        'Bug Life Cycle Management',
-        'Agile / Scrum Methodologies',
-        'Git & GitHub Version Control'
+        { name: 'Trello Ticket Lifecycle', tag: '116+ Cards' },
+        { name: 'Test Cases & Test Suites', tag: 'Google Sheets' },
+        { name: 'Bug Life Cycle Management', tag: 'Systematic' },
+        { name: 'Agile & Scrum Methodologies', tag: 'Standups/Sprints' },
+        { name: 'Git & GitHub Version Control', tag: 'Repositories' }
       ]
     },
     {
-      title: 'Automation & Programming',
-      icon: <Code2 size={20} className="text-amber-400" />,
+      id: 'automation',
+      title: 'Automation & Core Technologies',
+      subtitle: 'Scripting, Tooling & Frontend Diagnostics',
+      accentColor: '#f59e0b',
+      icon: <Code2 size={26} className="text-amber-400" />,
       skills: [
-        'Playwright Automation',
-        'TypeScript',
-        'JavaScript (ES6+)',
-        'HTML5 & CSS3',
-        'Tailwind CSS',
-        'VS Code'
+        { name: 'Playwright E2E Automation', tag: 'Framework' },
+        { name: 'TypeScript', tag: 'Strong Typing' },
+        { name: 'JavaScript (ES6+)', tag: 'DOM/Fetch' },
+        { name: 'HTML5 & CSS3 / Tailwind', tag: 'Layout Audits' },
+        { name: 'VS Code & Developer Tooling', tag: 'Workspace' }
       ]
     }
   ];
@@ -296,22 +328,9 @@ const App = () => {
           I'm <strong className="text-white">Sojib Ahmed</strong>, a quality-driven <strong>Software Quality Assurance (SQA) Engineer</strong> with 3 months of intensive internship experience at <strong>Appifylab</strong>. Specializing in manual SaaS (LMS) testing, branded mobile builds via <strong>Apple TestFlight</strong>, deep link routing, API response validation, and test automation with <strong>Playwright</strong>.
         </p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="hero-actions"
-        >
-          <a
-            href="/Sojib_Ahmed_SQA_Resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            download="Sojib_Ahmed_SQA_Resume.pdf"
-            className="btn-primary"
-          >
-            <Download size={18} /> Download CV (PDF)
-          </a>
-          <a href="#projects" className="btn-secondary">
+        {/* Hero Actions (Primary is Explore QA Work, CV button removed from hero start) */}
+        <div className="hero-actions">
+          <a href="#projects" className="btn-primary">
             Explore QA Work <ArrowUpRight size={18} />
           </a>
           <a
@@ -325,15 +344,10 @@ const App = () => {
           <a href="mailto:sojibsylhet77@gmail.com" className="btn-outline">
             <Mail size={18} /> Email Me
           </a>
-        </motion.div>
+        </div>
 
-        {/* Stats Strip */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-          className="stats-grid"
-        >
+        {/* Stats Strip: 3 Cards */}
+        <div className="stats-grid">
           {stats.map((stat, i) => (
             <div key={i} className="stat-card glass-panel">
               <div className="stat-value gradient-text">{stat.value}</div>
@@ -341,10 +355,10 @@ const App = () => {
               <div className="stat-sub">{stat.sub}</div>
             </div>
           ))}
-        </motion.div>
+        </div>
       </section>
 
-      {/* About Me Section (Moved UP for High Impact!) */}
+      {/* About Me Section (High Impact, Positioned at Top) */}
       <section id="about" className="container section-spacing">
         <div className="section-header text-center">
           <span className="section-eyebrow">Professional Profile</span>
@@ -590,7 +604,7 @@ const App = () => {
           </AnimatePresence>
         </motion.div>
 
-        {/* See More on GitHub Button (Prominent & High Impact!) */}
+        {/* See More on GitHub Button Banner */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -610,39 +624,60 @@ const App = () => {
         </motion.div>
       </section>
 
-      {/* Skills Section */}
+      {/* Redesigned & Beautiful Technical Skills Section */}
       <section id="skills" className="container section-spacing">
         <div className="section-header text-center">
-          <span className="section-eyebrow">Competencies &amp; Toolset</span>
-          <h2 className="section-title">Technical Skills</h2>
+          <span className="section-eyebrow">Technical Competencies</span>
+          <h2 className="section-title">Technical Skills &amp; Arsenal</h2>
           <p className="section-subtitle">
-            Core skills spanning manual QA methodologies, mobile device testing, API inspection, and modern web technologies.
+            Industry-standard manual testing techniques, mobile lab verifications, API inspection, and modern tooling.
           </p>
+
+          {/* Featured Tools & Technologies Ribbon */}
+          <div className="tools-ribbon-wrap">
+            <div className="tools-ribbon">
+              {toolsRibbon.map((tool, idx) => (
+                <div key={idx} className="tool-ribbon-item">
+                  <span className="tool-dot" style={{ backgroundColor: tool.color }} />
+                  <span>{tool.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
-        <div className="skills-category-grid">
-          {skillCategories.map((cat, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: idx * 0.1 }}
-              className="skill-category-card glass-panel"
+        {/* Bento Grid Architecture for Skills */}
+        <div className="skills-bento-grid">
+          {skillCategories.map((cat) => (
+            <div
+              key={cat.id}
+              className={`skill-bento-card glass-panel ${cat.featured ? 'bento-featured' : ''}`}
             >
-              <div className="skill-cat-header">
-                {cat.icon}
-                <h3 className="skill-cat-title">{cat.title}</h3>
+              <div className="skill-bento-header">
+                <div
+                  className="skill-bento-icon-wrap"
+                  style={{ backgroundColor: `${cat.accentColor}18`, borderColor: `${cat.accentColor}40` }}
+                >
+                  {cat.icon}
+                </div>
+                <div>
+                  <h3 className="skill-bento-title">{cat.title}</h3>
+                  <p className="skill-bento-sub">{cat.subtitle}</p>
+                </div>
               </div>
-              <ul className="skill-items-list">
+
+              <div className="skill-chips-wrap">
                 {cat.skills.map((s, sIdx) => (
-                  <li key={sIdx} className="skill-item">
-                    <CheckCircle2 size={14} className="text-cyan-400" />
-                    <span>{s}</span>
-                  </li>
+                  <div key={sIdx} className="skill-chip">
+                    <Check size={14} style={{ color: cat.accentColor }} className="skill-chip-check" />
+                    <span className="skill-chip-name">{s.name}</span>
+                    <span className="skill-chip-tag" style={{ color: cat.accentColor, backgroundColor: `${cat.accentColor}12` }}>
+                      {s.tag}
+                    </span>
+                  </div>
                 ))}
-              </ul>
-            </motion.div>
+              </div>
+            </div>
           ))}
         </div>
       </section>
@@ -655,12 +690,7 @@ const App = () => {
         </div>
 
         <div className="education-grid">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="edu-card glass-panel"
-          >
+          <div className="edu-card glass-panel">
             <div className="edu-icon-wrap">
               <GraduationCap size={24} />
             </div>
@@ -673,15 +703,9 @@ const App = () => {
                 Relevant coursework: Software Engineering, Database Systems, Object-Oriented Programming, Data Structures, Algorithms, Computer Networks.
               </p>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="edu-card glass-panel"
-          >
+          <div className="edu-card glass-panel">
             <div className="edu-icon-wrap" style={{ color: '#a855f7' }}>
               <Sparkles size={24} />
             </div>
@@ -694,7 +718,7 @@ const App = () => {
                 Participated in technical seminars, coding hackathons, software engineering workshops, and collaborative problem-solving sessions.
               </p>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
