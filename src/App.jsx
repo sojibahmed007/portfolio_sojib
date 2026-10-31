@@ -23,11 +23,19 @@ import {
   ArrowUpRight,
   Sparkles,
   PhoneCall,
-  MapPin
+  MapPin,
+  Download,
+  ToggleLeft,
+  ToggleRight,
+  Target,
+  Cpu,
+  FileText
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const App = () => {
+  // Toggle between Open to Work and Currently Employed
+  const [isOpenToWork, setIsOpenToWork] = useState(true);
   const [activeTab, setActiveTab] = useState('all');
 
   const stats = [
@@ -44,11 +52,11 @@ const App = () => {
       title: 'Intern QA Portfolio & Bug Case Reports',
       subtitle: 'Appifylab (EzyCourse & EzyCommunity)',
       description:
-        'Documented and verified 116+ production/staging defect tickets across EzyCommunity (103 cards) and EzyCourse LMS (13 cards). Authored comprehensive test suites in Google Sheets for Deep Linking, 1:1 Coaching, and User Status.',
+        'Comprehensive documentation of 116+ production/staging defect tickets across EzyCommunity (103 cards) and EzyCourse LMS (13 cards). Authored detailed test suites covering Deep Linking, 1:1 Coaching modules, Notification triggers, and Mobile User Status.',
       tech: ['Manual Testing', 'Trello (116+ Tickets)', 'iOS TestFlight', 'Deep Link QA', 'Google Sheets'],
       link: 'https://github.com/sojibahmed007/Intern_work',
       liveLink: 'https://github.com/sojibahmed007/Intern_work#readme',
-      liveLabel: 'View Reports',
+      liveLabel: 'View QA Reports',
       featured: true,
       badgeColor: '#38bdf8',
       icon: <Bug size={24} />
@@ -59,7 +67,7 @@ const App = () => {
       title: 'Videos Tab UI Automation Suite',
       subtitle: 'Playwright & TypeScript End-to-End QA',
       description:
-        'Automated end-to-end regression test suite testing Videos tab visibility, URL routing (/videos), empty state handling, and state persistence after browser reload.',
+        'Automated end-to-end regression test suite validating Videos tab rendering, URL routing assertions (/videos), empty state handling, and state persistence after browser reloads.',
       tech: ['Playwright', 'TypeScript', 'Test Automation', 'Regression QA'],
       link: 'https://github.com/sojibahmed007/Automation_Library_issue_com',
       liveLink: 'https://github.com/sojibahmed007/Automation_Library_issue_com',
@@ -74,7 +82,7 @@ const App = () => {
       title: 'SwiftCart — E-Commerce Web Application',
       subtitle: 'Modern Shopping Experience & UI Testing',
       description:
-        'A dynamic e-commerce frontend interface with real-time product filtering, shopping cart calculations, responsive layouts, and edge-case form validation.',
+        'A dynamic e-commerce web platform featuring real-time product filtering, dynamic cart calculations, RESTful API data consumption, responsive layouts, and edge-case form validation.',
       tech: ['JavaScript ES6', 'REST APIs', 'HTML5', 'CSS3', 'UI Testing'],
       link: 'https://github.com/sojibahmed007/SwiftCart-E-Commerce',
       liveLink: 'https://fascinating-melomakarona-78538e.netlify.app/',
@@ -89,7 +97,7 @@ const App = () => {
       title: 'Living Lab Platform',
       subtitle: 'Data Monitoring Interface',
       description:
-        'An experimental laboratory web interface featuring real-time data monitoring components, responsive grid architecture, and interactive layout elements.',
+        'An experimental laboratory interface featuring real-time data monitoring components, responsive grid architecture, and interactive layout elements built with modern CSS standards.',
       tech: ['HTML5', 'CSS3', 'Tailwind CSS', 'JavaScript'],
       link: 'https://github.com/sojibahmed007/Living_lab',
       liveLink: 'https://resplendent-kelpie-dd99b8.netlify.app',
@@ -103,7 +111,7 @@ const App = () => {
       title: 'Text to Speech Converter',
       subtitle: 'Web Speech Synthesis Tool',
       description:
-        'Interactive web application converting text input into natural speech using the Web Speech API with custom rate, pitch, and voice controls.',
+        'Interactive web application converting text input into natural speech using the Web Speech API with custom pitch, rate, and multi-voice selection controls.',
       tech: ['JavaScript ES6', 'Web Speech API', 'CSS3'],
       link: 'https://github.com/sojibahmed007/Text_to_Speech',
       liveLink: 'https://scintillating-pithivier-0ce296.netlify.app',
@@ -117,7 +125,7 @@ const App = () => {
       title: 'English Janala',
       subtitle: 'Interactive Language Learning Portal',
       description:
-        'An educational web platform designed for English language learning with structured vocabulary modules, clean navigation, and accessible UI elements.',
+        'An educational web platform designed for English language learning with structured vocabulary modules, intuitive navigation, and accessible UI components.',
       tech: ['HTML5', 'JavaScript ES6', 'CSS3'],
       link: 'https://github.com/sojibahmed007/English_janala',
       liveLink: 'https://statuesque-tartufo-1ae5df.netlify.app',
@@ -187,13 +195,36 @@ const App = () => {
     }
   ];
 
+  const qaPillars = [
+    {
+      title: 'User-Centric Exploratory Testing',
+      desc: 'Going beyond standard scripts to simulate unpredictable user behaviors, edge gestures, and network drops.',
+      icon: <Target size={22} className="text-cyan-400" />
+    },
+    {
+      title: 'Meticulous Defect Triage',
+      desc: 'Logging bug tickets with clear reproducible steps, expected vs actual outputs, error logs, and screen recordings.',
+      icon: <Bug size={22} className="text-purple-400" />
+    },
+    {
+      title: 'API & Data Integrity',
+      desc: 'Validating payload structures, JSON data parsing, and investigating backend HTTP errors (404, 422, 500).',
+      icon: <Cpu size={22} className="text-blue-400" />
+    },
+    {
+      title: 'Agile Engineering Collaboration',
+      desc: 'Working side-by-side with developers and product managers to accelerate release cadence without sacrificing stability.',
+      icon: <ShieldCheck size={22} className="text-emerald-400" />
+    }
+  ];
+
   const filteredProjects = activeTab === 'all'
     ? projects
     : projects.filter(p => p.category === activeTab);
 
   return (
     <div className="portfolio-wrapper">
-      {/* Background Gradients */}
+      {/* Background Ambient Glows */}
       <div className="bg-glow bg-glow-1" />
       <div className="bg-glow bg-glow-2" />
 
@@ -217,54 +248,78 @@ const App = () => {
             <a href="#experience">Experience</a>
             <a href="#projects">Work &amp; QA</a>
             <a href="#skills">Skills</a>
-            <a href="#contact" className="nav-cta">Connect</a>
+            <a href="#contact">Contact</a>
+            <a
+              href="/Sojib_Ahmed_SQA_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              download="Sojib_Ahmed_SQA_Resume.pdf"
+              className="nav-cv-btn"
+            >
+              <Download size={14} /> Resume (PDF)
+            </a>
           </div>
         </nav>
       </header>
 
       {/* Hero Section */}
       <section className="hero-section container">
+        {/* Interactive Availability Toggle */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="hero-badge-wrap"
+        >
+          <button
+            type="button"
+            onClick={() => setIsOpenToWork(!isOpenToWork)}
+            className={`status-pill ${isOpenToWork ? 'status-open' : 'status-closed'}`}
+            title="Click to toggle availability status"
+          >
+            <span className={`pulse-indicator ${isOpenToWork ? 'pulse-green' : 'pulse-amber'}`} />
+            <span className="status-text">
+              {isOpenToWork ? 'Available for SQA Roles (Open to Work)' : 'Currently Employed / Closed to Offers'}
+            </span>
+            <span className="status-switch-tag">
+              {isOpenToWork ? <ToggleRight size={16} /> : <ToggleLeft size={16} />}
+            </span>
+          </button>
+        </motion.div>
+
+        <h1 className="hero-heading">
+          Engineering Quality. <br />
+          <span className="gradient-text">Ensuring Digital Precision.</span>
+        </h1>
+
+        <p className="hero-summary">
+          I'm <strong className="text-white">Sojib Ahmed</strong>, a quality-driven <strong>Software Quality Assurance (SQA) Engineer</strong> with 3 months of intensive internship experience at <strong>Appifylab</strong>. Specializing in manual SaaS (LMS) testing, branded mobile builds via <strong>Apple TestFlight</strong>, deep link routing, API response validation, and test automation with <strong>Playwright</strong>.
+        </p>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="hero-badge-wrap"
-        >
-          <span className="status-pill">
-            <span className="pulse-indicator" />
-            Available for SQA Engineer &amp; QA Roles
-          </span>
-        </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.1 }}
-          className="hero-heading"
-        >
-          Engineering Quality. <br />
-          <span className="gradient-text">Ensuring Digital Precision.</span>
-        </motion.h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="hero-summary"
-        >
-          I'm <strong className="text-white">Sojib Ahmed</strong>, a quality-driven <strong>Software Quality Assurance (SQA) Engineer</strong> with 3 months of intensive internship experience at <strong>Appifylab</strong>. Specializing in manual SaaS (LMS) testing, branded mobile builds via <strong>Apple TestFlight</strong>, deep link routing, API response validation, and test automation with <strong>Playwright</strong>.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
           className="hero-actions"
         >
-          <a href="#projects" className="btn-primary">
+          <a
+            href="/Sojib_Ahmed_SQA_Resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            download="Sojib_Ahmed_SQA_Resume.pdf"
+            className="btn-primary"
+          >
+            <Download size={18} /> Download CV (PDF)
+          </a>
+          <a href="#projects" className="btn-secondary">
             Explore QA Work <ArrowUpRight size={18} />
           </a>
-          <a href="https://github.com/sojibahmed007/Intern_work" target="_blank" rel="noopener noreferrer" className="btn-secondary">
+          <a
+            href="https://github.com/sojibahmed007/Intern_work"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-secondary"
+          >
             <Github size={18} /> QA Portfolio
           </a>
           <a href="mailto:sojibsylhet77@gmail.com" className="btn-outline">
@@ -274,9 +329,9 @@ const App = () => {
 
         {/* Stats Strip */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.7, delay: 0.4 }}
           className="stats-grid"
         >
           {stats.map((stat, i) => (
@@ -289,11 +344,83 @@ const App = () => {
         </motion.div>
       </section>
 
+      {/* About Me Section (Moved UP for High Impact!) */}
+      <section id="about" className="container section-spacing">
+        <div className="section-header text-center">
+          <span className="section-eyebrow">Professional Profile</span>
+          <h2 className="section-title">About Me &amp; QA Philosophy</h2>
+          <p className="section-subtitle">
+            Bridging technical Computer Science foundations with relentless curiosity to build resilient, defect-free software.
+          </p>
+        </div>
+
+        <div className="about-detailed-grid">
+          {/* Left Column: Personal Narrative */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="about-bio-card glass-panel"
+          >
+            <h3 className="about-bio-heading">
+              Hi, I'm <span className="gradient-text">Sojib Ahmed</span>.
+            </h3>
+            <p className="about-bio-text">
+              I am a Computer Science &amp; Engineering graduate from <strong>Leading University, Sylhet</strong> (CGPA 3.59/4.00) with hands-on Software Quality Assurance experience gained during my internship at <strong>Appifylab</strong>.
+            </p>
+            <p className="about-bio-text">
+              My philosophy toward software quality is simple: <em>"Think like an everyday user, test like a creative adversary, and document like a seasoned engineer."</em> Having a strong understanding of web development (JavaScript, HTML, CSS, React) allows me to pinpoint root causes behind UI glitches, API response failures, and state discrepancies rather than just noting symptoms.
+            </p>
+            <p className="about-bio-text">
+              Whether conducting boundary analysis on 5,000+ character inputs, verifying deep link redirects across iOS TestFlight and Android builds, or inspecting RESTful API payloads in Postman, I take pride in catching critical issues before they ever impact live customers.
+            </p>
+
+            <div className="about-contact-badges">
+              <div className="contact-badge-item">
+                <MapPin size={16} className="text-cyan-400" />
+                <span>Sylhet, Bangladesh</span>
+              </div>
+              <div className="contact-badge-item">
+                <PhoneCall size={16} className="text-cyan-400" />
+                <span>+88 01777579006</span>
+              </div>
+              <div className="contact-badge-item">
+                <Mail size={16} className="text-cyan-400" />
+                <span>sojibsylhet77@gmail.com</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right Column: QA Pillars */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="about-pillars-grid"
+          >
+            {qaPillars.map((pillar, idx) => (
+              <div key={idx} className="pillar-card glass-panel">
+                <div className="pillar-icon-wrap">{pillar.icon}</div>
+                <div>
+                  <h4 className="pillar-title">{pillar.title}</h4>
+                  <p className="pillar-desc">{pillar.desc}</p>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
       {/* Experience Section (Spotlight Appifylab) */}
       <section id="experience" className="container section-spacing">
         <div className="section-header text-center">
           <span className="section-eyebrow">Professional Background</span>
           <h2 className="section-title">Hands-On SQA Experience</h2>
+          <p className="section-subtitle">
+            Real production defect management and cross-platform verification across LMS SaaS platforms and community apps.
+          </p>
         </div>
 
         <motion.div
@@ -310,7 +437,7 @@ const App = () => {
               </div>
               <h3 className="exp-role-title">SQA Engineer Intern</h3>
               <p className="exp-products">
-                Platforms: <strong>EzyCourse</strong> (LMS SaaS) &amp; <strong>EzyCommunity</strong> (Web, iOS, Android)
+                Platforms: <strong>EzyCourse</strong> (LMS SaaS Platform) &amp; <strong>EzyCommunity</strong> (Web, iOS, Android)
               </p>
             </div>
             <div className="exp-date-pill">August 03 – October 30, 2026 (3 Months)</div>
@@ -322,8 +449,8 @@ const App = () => {
                 <Bug size={20} />
               </div>
               <div>
-                <h4>116+ Defect Tickets Tracked</h4>
-                <p>Managed 103 cards on EzyCommunity (79 App Live, 24 Web Live) and 13 EzyCourse cards via Trello with exact reproduction steps and media logs.</p>
+                <h4>116+ Defect Tickets Tracked on Trello</h4>
+                <p>Triaged and verified 103 cards on EzyCommunity (79 App Live, 24 Web Live) and 13 EzyCourse cards with exact reproduction steps, logs, and video evidence.</p>
               </div>
             </div>
 
@@ -333,7 +460,7 @@ const App = () => {
               </div>
               <div>
                 <h4>iOS TestFlight &amp; Deep Link QA</h4>
-                <p>Validated pre-release iOS builds and Android APKs, verifying deep links to private lessons, courses, and community chat channels without routing drop-offs.</p>
+                <p>Validated pre-release iOS builds on Apple TestFlight and Android APKs, verifying deep links to private lessons, courses, and community chat channels without drop-offs.</p>
               </div>
             </div>
 
@@ -343,7 +470,7 @@ const App = () => {
               </div>
               <div>
                 <h4>API &amp; Backend Status Code Analysis</h4>
-                <p>Replicated 500 errors on blog creation, 422 unprocessable entity responses on video library deletion, and 404 access expiration logic on bundle courses.</p>
+                <p>Investigated 500 errors on blog creation, 422 unprocessable entity responses on video library deletion, and 404 access expiration logic on bundle courses.</p>
               </div>
             </div>
 
@@ -353,7 +480,7 @@ const App = () => {
               </div>
               <div>
                 <h4>Boundary &amp; Concurrency Edge Cases</h4>
-                <p>Diagnosed 5,000+ character app crash boundaries, multi-tap race conditions on lesson loading, and cross-platform voice message playback bugs between Web &amp; iOS.</p>
+                <p>Discovered 5,000+ character app unresponsiveness boundaries, multi-tap race conditions on lesson loading, and cross-platform voice message playback bugs between Web &amp; iOS.</p>
               </div>
             </div>
           </div>
@@ -462,6 +589,25 @@ const App = () => {
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {/* See More on GitHub Button (Prominent & High Impact!) */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="see-more-wrap text-center"
+        >
+          <a
+            href="https://github.com/sojibahmed007?tab=repositories"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-github-more"
+          >
+            <Github size={20} />
+            <span>See More Projects &amp; Repositories on GitHub</span>
+            <ArrowUpRight size={18} />
+          </a>
+        </motion.div>
       </section>
 
       {/* Skills Section */}
@@ -501,66 +647,52 @@ const App = () => {
         </div>
       </section>
 
-      {/* About & Education */}
-      <section id="about" className="container section-spacing">
-        <div className="about-grid">
+      {/* Education & Extracurriculars */}
+      <section id="education" className="container section-spacing">
+        <div className="section-header text-center">
+          <span className="section-eyebrow">Academic &amp; Leadership</span>
+          <h2 className="section-title">Education &amp; Community</h2>
+        </div>
+
+        <div className="education-grid">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="about-bio glass-panel"
+            className="edu-card glass-panel"
           >
-            <span className="section-eyebrow">Profile</span>
-            <h2 className="section-title text-left">About Sojib Ahmed</h2>
-            <p className="bio-paragraph">
-              I am a Computer Science &amp; Engineering graduate from <strong>Leading University, Sylhet</strong>. My passion lies in software reliability, exploratory testing, and delivering flawless digital products.
-            </p>
-            <p className="bio-paragraph">
-              During my internship at <strong>Appifylab</strong>, I worked closely with engineering teams to validate complex SaaS workflows, multi-tenant LMS modules, and cross-platform community features. I combine a developer's mindset with a QA engineer's meticulous attention to detail to uncover edge cases before they reach end users.
-            </p>
-            <div className="bio-contact-details">
-              <div className="bio-detail-item">
-                <MapPin size={16} className="text-cyan-400" /> Sylhet, Bangladesh
-              </div>
-              <div className="bio-detail-item">
-                <PhoneCall size={16} className="text-cyan-400" /> +88 01777579006
-              </div>
-              <div className="bio-detail-item">
-                <Mail size={16} className="text-cyan-400" /> sojibsylhet77@gmail.com
-              </div>
+            <div className="edu-icon-wrap">
+              <GraduationCap size={24} />
+            </div>
+            <div>
+              <span className="edu-period">2022 – 2026</span>
+              <h3 className="edu-degree">B.Sc. in Computer Science &amp; Engineering</h3>
+              <p className="edu-institution">Leading University, Sylhet, Bangladesh</p>
+              <div className="cgpa-pill">CGPA: 3.59 / 4.00</div>
+              <p className="edu-note">
+                Relevant coursework: Software Engineering, Database Systems, Object-Oriented Programming, Data Structures, Algorithms, Computer Networks.
+              </p>
             </div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="education-panel glass-panel"
+            transition={{ delay: 0.1 }}
+            className="edu-card glass-panel"
           >
-            <div className="edu-block">
-              <div className="edu-icon-wrap">
-                <GraduationCap size={22} />
-              </div>
-              <div>
-                <span className="edu-period">2022 – 2026</span>
-                <h3 className="edu-degree">B.Sc. in Computer Science &amp; Engineering</h3>
-                <p className="edu-institution">Leading University, Sylhet, Bangladesh</p>
-                <div className="cgpa-pill">CGPA: 3.59 / 4.00</div>
-              </div>
+            <div className="edu-icon-wrap" style={{ color: '#a855f7' }}>
+              <Sparkles size={24} />
             </div>
-
-            <div className="edu-divider" />
-
-            <div className="edu-block">
-              <div className="edu-icon-wrap" style={{ color: '#a855f7' }}>
-                <Sparkles size={22} />
-              </div>
-              <div>
-                <span className="edu-period">Student Branch</span>
-                <h3 className="edu-degree">IEEE Computer Society</h3>
-                <p className="edu-institution">Leading University Student Branch</p>
-                <p className="edu-desc">Active Member participating in tech workshops, seminars, and collaborative problem-solving.</p>
-              </div>
+            <div>
+              <span className="edu-period">Student Branch</span>
+              <h3 className="edu-degree">IEEE Computer Society</h3>
+              <p className="edu-institution">Leading University Student Branch</p>
+              <div className="activity-pill">Active Member</div>
+              <p className="edu-note">
+                Participated in technical seminars, coding hackathons, software engineering workshops, and collaborative problem-solving sessions.
+              </p>
             </div>
           </motion.div>
         </div>
@@ -583,6 +715,15 @@ const App = () => {
           <div className="contact-cta-wrap">
             <a href="mailto:sojibsylhet77@gmail.com" className="btn-primary btn-large">
               <Mail size={20} /> Send Direct Email
+            </a>
+            <a
+              href="/Sojib_Ahmed_SQA_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              download="Sojib_Ahmed_SQA_Resume.pdf"
+              className="btn-secondary btn-large"
+            >
+              <FileText size={20} /> Download Resume
             </a>
           </div>
 
