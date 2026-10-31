@@ -251,8 +251,21 @@ body {
   margin-bottom: 1.5rem;
 }
 
-/* Hero Status Pill */
-.status-pill {
+/* Hero Status Dropdown */
+.hero-badge-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 40;
+}
+
+.status-dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.status-pill.status-dropdown-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.65rem;
@@ -260,16 +273,56 @@ body {
   border-radius: 9999px;
   font-size: 0.85rem;
   font-weight: 600;
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.35);
+  cursor: pointer;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.status-working {
+  border-color: rgba(16, 185, 129, 0.4);
   color: #34d399;
-  letter-spacing: 0.2px;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.12);
+}
+
+.status-working:hover {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: #34d399;
+  transform: translateY(-1px);
+}
+
+.status-open-job {
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.12);
+}
+
+.status-open-job:hover {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: #38bdf8;
+  transform: translateY(-1px);
+}
+
+.dropdown-chevron {
+  transition: transform 0.25s ease;
+  opacity: 0.8;
+  margin-left: 0.15rem;
+}
+
+.dropdown-chevron.rotated {
+  transform: rotate(180deg);
 }
 
 .pulse-indicator {
   width: 9px;
   height: 9px;
   border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.pulse-green {
   background-color: #10b981;
   box-shadow: 0 0 10px #10b981;
   animation: pulseGreen 2s infinite;
@@ -279,6 +332,72 @@ body {
   0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
   70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
   100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.pulse-cyan {
+  background-color: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8;
+  animation: pulseCyan 2s infinite;
+}
+
+@keyframes pulseCyan {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.7); }
+  70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(56, 189, 248, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+}
+
+/* Floating Status Dropdown Menu */
+.status-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 310px;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1rem;
+  padding: 0.45rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  z-index: 50;
+}
+
+.dropdown-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.95rem;
+  border-radius: 0.65rem;
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  font-size: 0.86rem;
+  font-weight: 550;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.dropdown-menu-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.dropdown-menu-item.selected {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+
+.dropdown-item-text {
+  flex: 1;
+}
+
+.dropdown-check {
+  margin-left: auto;
 }
 
 .hero-heading {
@@ -929,48 +1048,40 @@ body {
   color: var(--text-muted);
 }
 
-/* Skill Badges (Logo + Name) */
+/* Skill Chips (Normal, Clean & Beautiful) */
 .skill-chips-wrap {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 0.65rem;
 }
 
 .skill-chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
   padding: 0.55rem 0.95rem;
-  background: rgba(255, 255, 255, 0.035);
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.75rem;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 0.65rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
 }
 
 .skill-chip:hover {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(56, 189, 248, 0.35);
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25), 0 0 12px rgba(56, 189, 248, 0.1);
-}
-
-.skill-chip-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: transform 0.2s ease;
-}
-
-.skill-chip:hover .skill-chip-icon {
-  transform: scale(1.15);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
 .skill-chip-name {
   font-size: 0.88rem;
-  font-weight: 600;
-  color: #f1f5f9;
+  font-weight: 550;
+  color: #e2e8f0;
+  letter-spacing: 0.15px;
+}
+
+.skill-chip:hover .skill-chip-name {
+  color: #ffffff;
 }
 
 /* Education & Extracurriculars Grid */

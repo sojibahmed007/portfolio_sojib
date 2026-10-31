@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Github,
   Linkedin,
@@ -28,12 +28,26 @@ import {
   Target,
   Cpu,
   FileText,
-  Check
+  Check,
+  ChevronDown
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const App = () => {
   const [activeTab, setActiveTab] = useState('all');
+  const [workStatus, setWorkStatus] = useState('working'); // 'working' | 'open'
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Stats: 3 High-Impact Cards (Removed QA Test Suites as requested)
   const stats = [
@@ -145,7 +159,7 @@ const App = () => {
     }
   ];
 
-  // Enhanced & Beautiful Technical Skills Architecture (With Skill Logos)
+  // Enhanced & Beautiful Technical Skills Architecture (Normal Clean Chips)
   const skillCategories = [
     {
       id: 'qa',
@@ -155,14 +169,14 @@ const App = () => {
       icon: <ShieldCheck size={26} className="text-cyan-400" />,
       featured: true,
       skills: [
-        { name: 'Manual Functional Testing', icon: <ShieldCheck size={16} />, color: '#38bdf8' },
-        { name: 'Regression & Retesting', icon: <Bug size={16} />, color: '#f43f5e' },
-        { name: 'Boundary Value Analysis', icon: <Target size={16} />, color: '#f59e0b' },
-        { name: 'Smoke & Sanity Testing', icon: <CheckCircle2 size={16} />, color: '#10b981' },
-        { name: 'RTL (Arabic) Localization QA', icon: <Globe size={16} />, color: '#06b6d4' },
-        { name: 'Root Cause & Defect Triage', icon: <Cpu size={16} />, color: '#a855f7' },
-        { name: 'Exploratory & Ad-hoc Testing', icon: <Sparkles size={16} />, color: '#eab308' },
-        { name: 'Cross-Browser UI Consistency', icon: <Layout size={16} />, color: '#3b82f6' }
+        'Manual Functional Testing',
+        'Regression & Retesting',
+        'Boundary Value Analysis',
+        'Smoke & Sanity Testing',
+        'RTL (Arabic) Localization QA',
+        'Root Cause & Defect Triage',
+        'Exploratory & Ad-hoc Testing',
+        'Cross-Browser UI Consistency'
       ]
     },
     {
@@ -172,11 +186,11 @@ const App = () => {
       accentColor: '#a855f7',
       icon: <Smartphone size={26} className="text-purple-400" />,
       skills: [
-        { name: 'Apple TestFlight iOS Builds', icon: <Smartphone size={16} />, color: '#0071e3' },
-        { name: 'Branded Android APKs', icon: <Smartphone size={16} />, color: '#3ddc84' },
-        { name: 'Deep Link URL Redirection', icon: <ExternalLink size={16} />, color: '#a855f7' },
-        { name: 'Mobile Viewport & Gestures', icon: <Smartphone size={16} />, color: '#38bdf8' },
-        { name: 'Device Hardware Permissions', icon: <ShieldCheck size={16} />, color: '#f59e0b' }
+        'Apple TestFlight iOS Builds',
+        'Branded Android APKs',
+        'Deep Link URL Redirection',
+        'Mobile Viewport & Gestures',
+        'Device Hardware Permissions (Camera/Mic)'
       ]
     },
     {
@@ -186,11 +200,11 @@ const App = () => {
       accentColor: '#3b82f6',
       icon: <Terminal size={26} className="text-blue-400" />,
       skills: [
-        { name: 'Postman API Testing', icon: <Terminal size={16} />, color: '#ff6c37' },
-        { name: 'REST API Endpoint Testing', icon: <Layers size={16} />, color: '#8b5cf6' },
-        { name: 'HTTP Status Codes (404, 422, 500)', icon: <Terminal size={16} />, color: '#ef4444' },
-        { name: 'JSON Data Structure Validation', icon: <FileText size={16} />, color: '#10b981' },
-        { name: 'Chrome DevTools Network Panel', icon: <Globe size={16} />, color: '#4285f4' }
+        'Postman API Testing',
+        'REST API Endpoint Testing',
+        'HTTP Status Codes (404, 422, 500)',
+        'JSON Data Structure Validation',
+        'Chrome DevTools Network Panel'
       ]
     },
     {
@@ -200,11 +214,11 @@ const App = () => {
       accentColor: '#10b981',
       icon: <FileSpreadsheet size={26} className="text-emerald-400" />,
       skills: [
-        { name: 'Trello Ticket Lifecycle (116+ Cards)', icon: <Layout size={16} />, color: '#0079bf' },
-        { name: 'Test Cases & Test Suites (Google Sheets)', icon: <FileSpreadsheet size={16} />, color: '#0f9d58' },
-        { name: 'Bug Life Cycle Management', icon: <Bug size={16} />, color: '#f43f5e' },
-        { name: 'Agile & Scrum Methodologies', icon: <Briefcase size={16} />, color: '#6366f1' },
-        { name: 'Git & GitHub Version Control', icon: <Github size={16} />, color: '#f05032' }
+        'Trello Ticket Lifecycle (116+ Cards)',
+        'Test Cases & Test Suites (Google Sheets)',
+        'Bug Life Cycle Management',
+        'Agile & Scrum Methodologies',
+        'Git & GitHub Version Control'
       ]
     },
     {
@@ -214,11 +228,11 @@ const App = () => {
       accentColor: '#f59e0b',
       icon: <Code2 size={26} className="text-amber-400" />,
       skills: [
-        { name: 'Playwright E2E Automation', icon: <Terminal size={16} />, color: '#45ba4b' },
-        { name: 'TypeScript', icon: <Code2 size={16} />, color: '#3178c6' },
-        { name: 'JavaScript (ES6+)', icon: <Code2 size={16} />, color: '#f7df1e' },
-        { name: 'HTML5 & CSS3 / Tailwind', icon: <Globe size={16} />, color: '#e34f26' },
-        { name: 'VS Code & Developer Tooling', icon: <Code2 size={16} />, color: '#007acc' }
+        'Playwright E2E Automation',
+        'TypeScript',
+        'JavaScript (ES6+)',
+        'HTML5 & CSS3 / Tailwind',
+        'VS Code & Developer Tooling'
       ]
     }
   ];
@@ -292,11 +306,66 @@ const App = () => {
 
       {/* Hero Section */}
       <section className="hero-section container">
-        <div className="hero-badge-wrap">
-          <span className="status-pill">
-            <span className="pulse-indicator" />
-            Currently Working as SQA Engineer
-          </span>
+        <div className="hero-badge-wrap" ref={dropdownRef}>
+          <div className="status-dropdown-wrapper">
+            <button
+              type="button"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className={`status-pill status-dropdown-btn ${workStatus === 'working' ? 'status-working' : 'status-open-job'}`}
+              aria-haspopup="listbox"
+              aria-expanded={isDropdownOpen}
+              title="Click to toggle status"
+            >
+              <span className={`pulse-indicator ${workStatus === 'working' ? 'pulse-green' : 'pulse-cyan'}`} />
+              <span className="status-pill-text">
+                {workStatus === 'working' ? 'Currently Working as a SQA Engineer' : 'Open for Job'}
+              </span>
+              <ChevronDown size={14} className={`dropdown-chevron ${isDropdownOpen ? 'rotated' : ''}`} />
+            </button>
+
+            <AnimatePresence>
+              {isDropdownOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -6, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -6, scale: 0.96 }}
+                  transition={{ duration: 0.18, ease: 'easeOut' }}
+                  className="status-dropdown-menu glass-panel"
+                  role="listbox"
+                >
+                  <button
+                    type="button"
+                    className={`dropdown-menu-item ${workStatus === 'working' ? 'selected' : ''}`}
+                    onClick={() => {
+                      setWorkStatus('working');
+                      setIsDropdownOpen(false);
+                    }}
+                    role="option"
+                    aria-selected={workStatus === 'working'}
+                  >
+                    <span className="pulse-indicator pulse-green" />
+                    <span className="dropdown-item-text">Currently Working as a SQA Engineer</span>
+                    {workStatus === 'working' && <Check size={14} className="dropdown-check text-emerald-400" />}
+                  </button>
+
+                  <button
+                    type="button"
+                    className={`dropdown-menu-item ${workStatus === 'open' ? 'selected' : ''}`}
+                    onClick={() => {
+                      setWorkStatus('open');
+                      setIsDropdownOpen(false);
+                    }}
+                    role="option"
+                    aria-selected={workStatus === 'open'}
+                  >
+                    <span className="pulse-indicator pulse-cyan" />
+                    <span className="dropdown-item-text">Open for Job</span>
+                    {workStatus === 'open' && <Check size={14} className="dropdown-check text-cyan-400" />}
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
 
         <h1 className="hero-heading">
@@ -649,12 +718,9 @@ const App = () => {
               </div>
 
               <div className="skill-chips-wrap">
-                {cat.skills.map((s, sIdx) => (
+                {cat.skills.map((skillName, sIdx) => (
                   <div key={sIdx} className="skill-chip">
-                    <span className="skill-chip-icon" style={{ color: s.color }}>
-                      {s.icon}
-                    </span>
-                    <span className="skill-chip-name">{s.name}</span>
+                    <span className="skill-chip-name">{skillName}</span>
                   </div>
                 ))}
               </div>
