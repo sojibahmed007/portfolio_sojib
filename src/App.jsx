@@ -47,16 +47,110 @@ const App = () => {
     }
   });
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncToast, setSyncToast] = useState(null);
   const dropdownRef = useRef(null);
 
-  const handleStatusChange = (newStatus) => {
+  // Fetch the remote live status across all devices
+  const fetchLiveStatus = async () => {
+    try {
+      let res = await fetch('/api/status', { cache: 'no-store' });
+      if (!res.ok) {
+        res = await fetch('/.netlify/functions/status', { cache: 'no-store' });
+      }
+      if (res.ok) {
+        const data = await res.json();
+        if (data.status === 'working' || data.status === 'open') {
+          setWorkStatus(data.status);
+          try {
+            localStorage.setItem('sojib_work_status', data.status);
+          } catch {
+            // ignore storage errors
+          }
+        }
+      }
+    } catch {
+      // Offline or network error: gracefully keep local status
+    }
+  };
+
+  useEffect(() => {
+    // 1. Initial remote status fetch
+    fetchLiveStatus();
+
+    // 2. Auto-sync on window focus / tab visibility change
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        fetchLiveStatus();
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+    window.addEventListener('focus', fetchLiveStatus);
+
+    // 3. Periodic polling every 20 seconds
+    const interval = setInterval(fetchLiveStatus, 20000);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibility);
+      window.removeEventListener('focus', fetchLiveStatus);
+      clearInterval(interval);
+    };
+  }, []);
+
+  const handleStatusChange = async (newStatus) => {
+    setIsDropdownOpen(false);
+    if (newStatus === workStatus) return;
+
+    // Optimistic UI update
     setWorkStatus(newStatus);
     try {
       localStorage.setItem('sojib_work_status', newStatus);
     } catch {
       // ignore storage errors
     }
-    setIsDropdownOpen(false);
+
+    setIsSyncing(true);
+    setSyncToast({
+      message: 'Syncing status across all devices...',
+      type: 'syncing'
+    });
+
+    try {
+      let res = await fetch('/api/status', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus })
+      });
+      if (!res.ok) {
+        res = await fetch('/.netlify/functions/status', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: newStatus })
+        });
+      }
+
+      if (res.ok) {
+        setSyncToast({
+          message: 'Status updated globally across all devices! 🌐',
+          type: 'success'
+        });
+      } else {
+        setSyncToast({
+          message: 'Saved locally on this device.',
+          type: 'notice'
+        });
+      }
+    } catch {
+      setSyncToast({
+        message: 'Saved locally on this device.',
+        type: 'notice'
+      });
+    } finally {
+      setIsSyncing(false);
+      setTimeout(() => {
+        setSyncToast(null);
+      }, 3500);
+    }
   };
 
   useEffect(() => {
@@ -389,7 +483,7 @@ const App = () => {
               aria-expanded={isDropdownOpen}
               title="Click to toggle status"
             >
-              <span className={`pulse-indicator ${workStatus === 'working' ? 'pulse-green' : 'pulse-cyan'}`} />
+              <span className={`pulse-indicator ${isSyncing ? 'pulse-syncing' : workStatus === 'working' ? 'pulse-green' : 'pulse-cyan'}`} />
               <span className="status-pill-text">
                 {workStatus === 'working' ? 'Currently Working as a SQA Engineer' : 'Open for Job'}
               </span>
@@ -907,6 +1001,26 @@ const App = () => {
           </div>
         </motion.div>
       </section>
+
+      {/* Realtime Status Sync Toast */}
+      <AnimatePresence>
+        {syncToast && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.94 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.94 }}
+            transition={{ duration: 0.22, ease: 'easeOut' }}
+            className={`sync-toast ${syncToast.type}`}
+            role="status"
+            aria-live="polite"
+          >
+            <span className="sync-toast-icon">
+              {syncToast.type === 'syncing' ? '⏳' : syncToast.type === 'success' ? '✅' : 'ℹ️'}
+            </span>
+            <span className="sync-toast-text">{syncToast.message}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
