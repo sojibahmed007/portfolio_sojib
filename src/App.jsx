@@ -31,7 +31,8 @@ import {
   Check,
   ChevronDown,
   Menu,
-  X
+  X,
+  Users
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -341,9 +342,10 @@ const App = () => {
       icon: <FileSpreadsheet size={26} className="text-emerald-400" />,
       skills: [
         'Trello Ticket Lifecycle (116+ Cards)',
+        'Cross-Functional Agile Teamwork',
+        'Daily Standups & Sprint Collaboration',
         'Test Cases & Test Suites (Google Sheets)',
-        'Bug Life Cycle Management',
-        'Agile & Scrum Methodologies',
+        'Bug Life Cycle & Root Cause Triage',
         'Git & GitHub Version Control'
       ]
     },
@@ -383,6 +385,11 @@ const App = () => {
       title: 'Mobile App & Cross-Platform Testing',
       desc: 'Verifying iOS builds on Apple TestFlight, branded Android APKs, deep link redirects, and multi-device responsive web layouts.',
       icon: <Smartphone size={22} className="text-emerald-400" />
+    },
+    {
+      title: 'Agile Teamwork & Cross-Functional Synergy',
+      desc: 'Collaborating closely with developers, product managers, and designers in daily standups and sprint planning to clarify requirements and accelerate defect resolution.',
+      icon: <Users size={22} className="text-pink-400" />
     },
     {
       title: 'Test Automation Fundamentals (In Progress)',
@@ -552,7 +559,7 @@ const App = () => {
         </h1>
 
         <p className="hero-summary">
-          I'm <strong className="text-white">Sojib Ahmed</strong>, a quality-driven <strong>Software Quality Assurance (SQA) Engineer</strong> with real-world, hands-on production testing experience at <strong>Appifylab</strong>. Specializing in manual SaaS (LMS) testing, Web &amp; Mobile QA via <strong>Apple TestFlight</strong>, deep link routing, REST API validation, and actively building foundational test automation with <strong>Playwright</strong>.
+          I'm <strong className="text-white">Sojib Ahmed</strong>, a quality-driven <strong>Software Quality Assurance (SQA) Engineer</strong> with real-world, hands-on production testing experience at <strong>Appifylab</strong>. Specializing in manual SaaS (LMS) testing, Web &amp; Mobile QA via <strong>Apple TestFlight</strong>, deep link routing, REST API validation, and collaborative agile teamwork with developers and product managers to ensure digital precision.
         </p>
 
         {/* Core Competency Badges */}
@@ -572,6 +579,10 @@ const App = () => {
           <div className="hero-tag-item">
             <Globe size={16} className="text-emerald-400" />
             <span>Web Cross-Browser Testing</span>
+          </div>
+          <div className="hero-tag-item">
+            <Users size={16} className="text-pink-400" />
+            <span>Agile Teamwork</span>
           </div>
           <div className="hero-tag-item">
             <Code2 size={16} className="text-amber-400" />
@@ -651,6 +662,10 @@ const App = () => {
 
             <p className="about-bio-text">
               My strong Computer Science background in JavaScript, React, and web architecture gives me an investigative edge. When a defect arises, I don't just report what is visible—I inspect Chrome DevTools, analyze network payloads (404, 422, 500 errors), and identify root causes so engineering teams can resolve them rapidly.
+            </p>
+
+            <p className="about-bio-text">
+              <strong>Agile Collaboration &amp; Teamwork:</strong> Great software is forged through cross-functional teamwork. At Appifylab, I worked side-by-side with frontend, backend, and mobile engineers in daily standups and sprint planning. Rather than treating QA as a silo, I actively partnered with developers to clarify user stories, reproduce elusive edge cases together, and ensure bug fixes were verified thoroughly before staging and production deployments.
             </p>
 
             <p className="about-bio-text">
@@ -747,6 +762,26 @@ const App = () => {
               <div>
                 <h4>Boundary &amp; Concurrency Edge Cases</h4>
                 <p>Discovered 5,000+ character app unresponsiveness boundaries, multi-tap race conditions on lesson loading, and cross-platform voice message playback bugs between Web &amp; iOS.</p>
+              </div>
+            </div>
+
+            <div className="exp-highlight-item">
+              <div className="exp-icon-wrap" style={{ color: '#ec4899' }}>
+                <Users size={20} />
+              </div>
+              <div>
+                <h4>Cross-Functional Agile Teamwork</h4>
+                <p>Collaborated side-by-side with frontend, backend, and mobile engineers in daily standups and sprint planning to clarify requirements, reproduce elusive bugs, and accelerate release cycles.</p>
+              </div>
+            </div>
+
+            <div className="exp-highlight-item">
+              <div className="exp-icon-wrap" style={{ color: '#06b6d4' }}>
+                <CheckCircle2 size={20} />
+              </div>
+              <div>
+                <h4>Release Readiness &amp; Acceptance QA</h4>
+                <p>Partnered with product managers and team leads to validate release deliverables against user stories, ensuring seamless deployments and zero critical escapes to production.</p>
               </div>
             </div>
           </div>
