@@ -163,11 +163,23 @@ const App = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Stats: 3 High-Impact Cards (Removed QA Test Suites as requested)
+  // Stats: 3 High-Impact Cards (Updated: Full Defect Lifecycle, Real-Time SaaS QA & Dedicated SQA Mindset)
   const stats = [
-    { label: 'Defect Cards Verified', value: '116+', sub: 'Trello Staging & Live' },
-    { label: 'Internship Experience', value: '3 Mos', sub: 'Appifylab (LMS SaaS)' },
-    { label: 'Academic CGPA', value: '3.59', sub: 'Leading University (CSE)' }
+    {
+      value: '116+',
+      label: 'Defects Reported & Resolved',
+      sub: 'End-to-End Defect Lifecycle on Trello (Staging & Live)'
+    },
+    {
+      value: 'Real-Time',
+      label: 'Hands-On SaaS QA Experience',
+      sub: 'Production Testing on EzyCourse & EzyCommunity'
+    },
+    {
+      value: '100%',
+      label: 'Dedicated to Quality Assurance',
+      sub: 'Meticulous Bug Hunting & User-Centric Verification'
+    }
   ];
 
   const toolsRibbon = [
@@ -203,10 +215,10 @@ const App = () => {
       id: 2,
       category: 'qa',
       title: 'Videos Tab UI Automation Suite',
-      subtitle: 'Playwright & TypeScript End-to-End QA',
+      subtitle: 'Playwright & TypeScript (Foundational Learning Project)',
       description:
-        'Automated end-to-end regression test suite validating Videos tab rendering, URL routing assertions (/videos), empty state handling, and state persistence after browser reloads.',
-      tech: ['Playwright', 'TypeScript', 'Test Automation', 'Regression QA'],
+        'An introductory automated regression test suite created while starting out with test automation. Automates essential UI rendering validation, navigation routing checks (/videos), and element state assertions using Playwright and TypeScript.',
+      tech: ['Playwright (Basics)', 'TypeScript', 'Automated Regression', 'VS Code'],
       link: 'https://github.com/sojibahmed007/Automation_Library_issue_com',
       liveLink: 'https://github.com/sojibahmed007/Automation_Library_issue_com',
       liveLabel: 'View Automation',
@@ -337,40 +349,45 @@ const App = () => {
     },
     {
       id: 'automation',
-      title: 'Automation & Core Technologies',
-      subtitle: 'Scripting, Tooling & Frontend Diagnostics',
+      title: 'Test Automation (Foundations & Learning)',
+      subtitle: 'Starting Test Automation Journey with Playwright & Scripting',
       accentColor: '#f59e0b',
       icon: <Code2 size={26} className="text-amber-400" />,
       skills: [
-        'Playwright E2E Automation',
-        'TypeScript',
-        'JavaScript (ES6+)',
-        'HTML5 & CSS3 / Tailwind',
-        'VS Code & Developer Tooling'
+        'Playwright E2E Automation (Basics/Beginner)',
+        'Basic UI & Navigation Assertions',
+        'TypeScript & JavaScript (ES6+)',
+        'HTML5, CSS3 & DOM Selectors',
+        'VS Code & Git Workflows'
       ]
     }
   ];
 
   const qaPillars = [
     {
-      title: 'User-Centric Exploratory Testing',
-      desc: 'Going beyond standard scripts to simulate unpredictable user behaviors, edge gestures, and network drops.',
+      title: 'User-Centric Exploratory & Boundary QA',
+      desc: 'Simulating unpredictable user journeys, multi-tap race conditions, boundary inputs (5,000+ chars), and network drops to find elusive bugs.',
       icon: <Target size={22} className="text-cyan-400" />
     },
     {
-      title: 'Meticulous Defect Triage',
-      desc: 'Logging bug tickets with clear reproducible steps, expected vs actual outputs, error logs, and screen recordings.',
+      title: 'End-to-End Defect Lifecycle on Trello',
+      desc: 'Logging bugs with exact reproduction steps, expected vs actual outputs, console error logs, and screen recordings—retesting until verified.',
       icon: <Bug size={22} className="text-purple-400" />
     },
     {
-      title: 'API & Data Integrity',
-      desc: 'Validating payload structures, JSON data parsing, and investigating backend HTTP errors (404, 422, 500).',
+      title: 'REST API & Network Payload Validation',
+      desc: 'Inspecting endpoints using Postman, validating request/response JSON structures, and diagnosing backend status codes (404, 422, 500).',
       icon: <Cpu size={22} className="text-blue-400" />
     },
     {
-      title: 'Agile Engineering Collaboration',
-      desc: 'Working side-by-side with developers and product managers to accelerate release cadence without sacrificing stability.',
-      icon: <ShieldCheck size={22} className="text-emerald-400" />
+      title: 'Mobile App & Cross-Platform Testing',
+      desc: 'Verifying iOS builds on Apple TestFlight, branded Android APKs, deep link redirects, and multi-device responsive web layouts.',
+      icon: <Smartphone size={22} className="text-emerald-400" />
+    },
+    {
+      title: 'Test Automation Fundamentals (In Progress)',
+      desc: 'Actively learning and scripting basic automated regression tests using Playwright and TypeScript for essential navigation and UI flows.',
+      icon: <Code2 size={22} className="text-amber-400" />
     }
   ];
 
@@ -535,8 +552,32 @@ const App = () => {
         </h1>
 
         <p className="hero-summary">
-          I'm <strong className="text-white">Sojib Ahmed</strong>, a quality-driven <strong>Software Quality Assurance (SQA) Engineer</strong> with 3 months of intensive internship experience at <strong>Appifylab</strong>. Specializing in manual SaaS (LMS) testing, branded mobile builds via <strong>Apple TestFlight</strong>, deep link routing, API response validation, and test automation with <strong>Playwright</strong>.
+          I'm <strong className="text-white">Sojib Ahmed</strong>, a quality-driven <strong>Software Quality Assurance (SQA) Engineer</strong> with real-world, hands-on production testing experience at <strong>Appifylab</strong>. Specializing in manual SaaS (LMS) testing, Web &amp; Mobile QA via <strong>Apple TestFlight</strong>, deep link routing, REST API validation, and actively building foundational test automation with <strong>Playwright</strong>.
         </p>
+
+        {/* Core Competency Badges */}
+        <div className="hero-core-tags">
+          <div className="hero-tag-item">
+            <ShieldCheck size={16} className="text-cyan-400" />
+            <span>Manual Testing</span>
+          </div>
+          <div className="hero-tag-item">
+            <Terminal size={16} className="text-blue-400" />
+            <span>API Testing (Postman)</span>
+          </div>
+          <div className="hero-tag-item">
+            <Smartphone size={16} className="text-purple-400" />
+            <span>Mobile QA (iOS &amp; Android)</span>
+          </div>
+          <div className="hero-tag-item">
+            <Globe size={16} className="text-emerald-400" />
+            <span>Web Cross-Browser Testing</span>
+          </div>
+          <div className="hero-tag-item">
+            <Code2 size={16} className="text-amber-400" />
+            <span>Automation Basics (Playwright)</span>
+          </div>
+        </div>
 
         {/* Hero Actions (Primary is Explore QA Work, CV button removed from hero start) */}
         <div className="hero-actions">
@@ -587,33 +628,34 @@ const App = () => {
             transition={{ duration: 0.5 }}
             className="about-bio-card glass-panel"
           >
+            <div className="about-bio-badge">
+              <Sparkles size={15} className="text-cyan-400" />
+              <span>Software Quality Assurance Engineer</span>
+            </div>
+
             <h3 className="about-bio-heading">
               Hi, I'm <span className="gradient-text">Sojib Ahmed</span>.
             </h3>
+
             <p className="about-bio-text">
-              I am a Computer Science &amp; Engineering graduate from <strong>Leading University, Sylhet</strong> (CGPA 3.59/4.00) with hands-on Software Quality Assurance experience gained during my internship at <strong>Appifylab</strong>.
-            </p>
-            <p className="about-bio-text">
-              My philosophy toward software quality is simple: <em>"Think like an everyday user, test like a creative adversary, and document like a seasoned engineer."</em> Having a strong understanding of web development (JavaScript, HTML, CSS, React) allows me to pinpoint root causes behind UI glitches, API response failures, and state discrepancies rather than just noting symptoms.
-            </p>
-            <p className="about-bio-text">
-              Whether conducting boundary analysis on 5,000+ character inputs, verifying deep link redirects across iOS TestFlight and Android builds, or inspecting RESTful API payloads in Postman, I take pride in catching critical issues before they ever impact live customers.
+              I am a Computer Science &amp; Engineering graduate from <strong>Leading University, Sylhet</strong> with genuine dedication to <strong>Software Quality Assurance</strong> and hands-on, real-world production experience gained during my internship at <strong>Appifylab</strong>.
             </p>
 
-            <div className="about-contact-badges">
-              <div className="contact-badge-item">
-                <MapPin size={16} className="text-cyan-400" />
-                <span>Sylhet, Bangladesh</span>
-              </div>
-              <div className="contact-badge-item">
-                <PhoneCall size={16} className="text-cyan-400" />
-                <span>+88 01777579006</span>
-              </div>
-              <div className="contact-badge-item">
-                <Mail size={16} className="text-cyan-400" />
-                <span>sojibsylhet77@gmail.com</span>
-              </div>
-            </div>
+            <p className="about-bio-text">
+              My philosophy toward software quality is simple: <em>"Think like an everyday user, test like a creative adversary, and document like a seasoned software engineer."</em> Quality assurance is more than executing predefined test cases—it is about anticipating user friction, exploring unforeseen edge cases, and ensuring digital products perform reliably under all real-world conditions.
+            </p>
+
+            <p className="about-bio-text">
+              At Appifylab, I took full ownership of defect reporting and verification across <strong>EzyCourse (LMS platform)</strong> and <strong>EzyCommunity (Web, iOS &amp; Android)</strong>. From documenting and verifying <strong>116+ defect tickets on Trello</strong> with step-by-step reproduction and video evidence, to testing branded iOS TestFlight builds and inspecting RESTful API payloads in Postman, I collaborated closely with developers in fast-paced agile cycles.
+            </p>
+
+            <p className="about-bio-text">
+              My strong Computer Science background in JavaScript, React, and web architecture gives me an investigative edge. When a defect arises, I don't just report what is visible—I inspect Chrome DevTools, analyze network payloads (404, 422, 500 errors), and identify root causes so engineering teams can resolve them rapidly.
+            </p>
+
+            <p className="about-bio-text">
+              While my core foundation lies in <strong>rigorous manual testing, exploratory testing, and API inspection</strong>, I am actively expanding into <strong>test automation</strong>—starting out with <strong>Playwright &amp; TypeScript</strong> to build foundational automated checks for core regression workflows.
+            </p>
           </motion.div>
 
           {/* Right Column: QA Pillars */}
@@ -664,7 +706,7 @@ const App = () => {
                 Platforms: <strong>EzyCourse</strong> (LMS SaaS Platform) &amp; <strong>EzyCommunity</strong> (Web, iOS, Android)
               </p>
             </div>
-            <div className="exp-date-pill">August 03 – October 30, 2026 (3 Months)</div>
+            <div className="exp-date-pill">August 03 – October 30, 2026 &bull; Production Internship</div>
           </div>
 
           <div className="exp-highlights-grid">
