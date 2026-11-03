@@ -5,7 +5,7 @@ export default async (req, context) => {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, x-admin-pin',
     'Cache-Control': 'no-cache, no-store, must-revalidate'
   };
 
@@ -35,6 +35,16 @@ export default async (req, context) => {
     try {
       const body = await req.json();
       const newStatus = body?.status;
+      const pin = body?.pin || req.headers.get('x-admin-pin');
+
+      // Valid Admin PINs: '7700', '007', 'sojib77'
+      const validPins = ['7700', '007', 'sojib77'];
+      if (!pin || !validPins.includes(String(pin).trim())) {
+        return new Response(
+          JSON.stringify({ error: 'Unauthorized: Invalid Admin PIN. Only Sojib can change this status.' }),
+          { status: 401, headers }
+        );
+      }
 
       if (newStatus !== 'working' && newStatus !== 'open') {
         return new Response(

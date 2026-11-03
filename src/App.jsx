@@ -32,7 +32,10 @@ import {
   ChevronDown,
   Menu,
   X,
-  Users
+  Users,
+  Lock,
+  Unlock,
+  Key
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -47,10 +50,75 @@ const App = () => {
       return 'working';
     }
   });
+
+  // Admin Authorization: only Sojib can toggle status
+  const [isAdmin, setIsAdmin] = useState(() => {
+    try {
+      const pin = localStorage.getItem('sojib_admin_pin');
+      return pin === '7700' || pin === '007' || pin === 'sojib77';
+    } catch {
+      return false;
+    }
+  });
+  const [showAdminModal, setShowAdminModal] = useState(false);
+  const [adminPinInput, setAdminPinInput] = useState('');
+  const [adminError, setAdminError] = useState('');
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
   const [syncToast, setSyncToast] = useState(null);
   const dropdownRef = useRef(null);
+
+  // Auto-unlock via URL query param: e.g. ?admin=7700
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const adminParam = params.get('admin');
+      if (adminParam && ['7700', '007', 'sojib77'].includes(adminParam.trim())) {
+        localStorage.setItem('sojib_admin_pin', adminParam.trim());
+        setIsAdmin(true);
+        setSyncToast({
+          message: 'Admin Mode Unlocked! You can now manage your live status. 👑',
+          type: 'success'
+        });
+        const cleanUrl = window.location.pathname + window.location.hash;
+        window.history.replaceState({}, document.title, cleanUrl);
+      }
+    } catch {}
+  }, []);
+
+  const handleAdminUnlock = (e) => {
+    e.preventDefault();
+    const cleanPin = adminPinInput.trim();
+    if (cleanPin === '7700' || cleanPin === '007' || cleanPin === 'sojib77') {
+      try {
+        localStorage.setItem('sojib_admin_pin', cleanPin);
+      } catch {}
+      setIsAdmin(true);
+      setShowAdminModal(false);
+      setAdminPinInput('');
+      setAdminError('');
+      setIsDropdownOpen(true);
+      setSyncToast({
+        message: 'Admin access granted! Status dropdown unlocked. 👑',
+        type: 'success'
+      });
+    } else {
+      setAdminError('Incorrect PIN. Only the portfolio owner can edit this.');
+    }
+  };
+
+  const handleAdminLogout = () => {
+    try {
+      localStorage.removeItem('sojib_admin_pin');
+    } catch {}
+    setIsAdmin(false);
+    setIsDropdownOpen(false);
+    setSyncToast({
+      message: 'Admin mode locked.',
+      type: 'notice'
+    });
+  };
 
   // Fetch the remote live status across all devices
   const fetchLiveStatus = async () => {
@@ -102,6 +170,8 @@ const App = () => {
     setIsDropdownOpen(false);
     if (newStatus === workStatus) return;
 
+    const savedPin = localStorage.getItem('sojib_admin_pin') || '7700';
+
     // Optimistic UI update
     setWorkStatus(newStatus);
     try {
@@ -119,14 +189,20 @@ const App = () => {
     try {
       let res = await fetch('/api/status', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: newStatus })
+        headers: {
+          'Content-Type': 'application/json',
+          'x-admin-pin': savedPin
+        },
+        body: JSON.stringify({ status: newStatus, pin: savedPin })
       });
       if (!res.ok) {
         res = await fetch('/.netlify/functions/status', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ status: newStatus })
+          headers: {
+            'Content-Type': 'application/json',
+            'x-admin-pin': savedPin
+          },
+          body: JSON.stringify({ status: newStatus, pin: savedPin })
         });
       }
 
@@ -135,6 +211,12 @@ const App = () => {
           message: 'Status updated globally across all devices! 🌐',
           type: 'success'
         });
+      } else if (res.status === 401) {
+        setSyncToast({
+          message: 'Unauthorized: Invalid Admin PIN. Please unlock Admin mode.',
+          type: 'warning'
+        });
+        setIsAdmin(false);
       } else {
         setSyncToast({
           message: 'Saved locally on this device.',
@@ -226,6 +308,21 @@ const App = () => {
       featured: true,
       badgeColor: '#a855f7',
       icon: <Terminal size={24} />
+    },
+    {
+      id: 7,
+      category: 'dev',
+      title: 'ShebaAI — AI Mobile Healthcare Ecosystem',
+      subtitle: 'Undergraduate Final Year Defense Project (CSE 4801)',
+      description:
+        'An intelligent cross-platform healthcare companion developed as the final-year capstone defense project at Leading University. Features OCR-based handwritten prescription analysis, automated medication carting, Google Gemini AI skin diagnostics, and smart medication push reminders.',
+      tech: ['Flutter', 'Dart', 'Python / Django', 'Google Gemini AI', 'OCR Engine', 'Mobile QA'],
+      link: 'https://github.com/Noctambulist007/Sheba_AI',
+      liveLink: 'https://github.com/Noctambulist007/Sheba_AI/releases/tag/Final_Year_Defense_Project',
+      liveLabel: 'Download APK / Release',
+      featured: true,
+      badgeColor: '#0ea5e9',
+      icon: <Smartphone size={24} />
     },
     {
       id: 3,
@@ -499,57 +596,90 @@ const App = () => {
       <section className="hero-section container">
         <div className="hero-badge-wrap" ref={dropdownRef}>
           <div className="status-dropdown-wrapper">
-            <button
-              type="button"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className={`status-pill status-dropdown-btn ${workStatus === 'working' ? 'status-working' : 'status-open-job'}`}
-              aria-haspopup="listbox"
-              aria-expanded={isDropdownOpen}
-              title="Click to toggle status"
-            >
-              <span className={`pulse-indicator ${isSyncing ? 'pulse-syncing' : workStatus === 'working' ? 'pulse-green' : 'pulse-cyan'}`} />
-              <span className="status-pill-text">
-                {workStatus === 'working' ? 'Currently Working as a SQA Engineer' : 'Open for Job'}
-              </span>
-              <ChevronDown size={14} className={`dropdown-chevron ${isDropdownOpen ? 'rotated' : ''}`} />
-            </button>
-
-            <AnimatePresence>
-              {isDropdownOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -6, scale: 0.96 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -6, scale: 0.96 }}
-                  transition={{ duration: 0.18, ease: 'easeOut' }}
-                  className="status-dropdown-menu glass-panel"
-                  role="listbox"
+            {isAdmin ? (
+              /* ADMIN MODE: Sojib can toggle between statuses */
+              <>
+                <button
+                  type="button"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className={`status-pill status-dropdown-btn ${workStatus === 'working' ? 'status-working' : 'status-open-job'}`}
+                  aria-haspopup="listbox"
+                  aria-expanded={isDropdownOpen}
+                  title="Admin Mode Active: Click to update your status"
                 >
-                  <button
-                    type="button"
-                    className={`dropdown-menu-item ${workStatus === 'working' ? 'selected' : ''}`}
-                    onClick={() => handleStatusChange('working')}
-                    role="option"
-                    aria-selected={workStatus === 'working'}
-                  >
-                    <span className="pulse-indicator pulse-green" />
-                    <span className="dropdown-item-text">Currently Working as a SQA Engineer</span>
-                    {workStatus === 'working' && <Check size={14} className="dropdown-check text-emerald-400" />}
-                  </button>
+                  <span className={`pulse-indicator ${isSyncing ? 'pulse-syncing' : workStatus === 'working' ? 'pulse-green' : 'pulse-cyan'}`} />
+                  <span className="status-pill-text">
+                    {workStatus === 'working' ? 'Currently Working as a SQA Engineer' : 'Open for Job'}
+                  </span>
+                  <span className="admin-status-pill-badge">Owner</span>
+                  <ChevronDown size={14} className={`dropdown-chevron ${isDropdownOpen ? 'rotated' : ''}`} />
+                </button>
 
-                  <button
-                    type="button"
-                    className={`dropdown-menu-item ${workStatus === 'open' ? 'selected' : ''}`}
-                    onClick={() => handleStatusChange('open')}
-                    role="option"
-                    aria-selected={workStatus === 'open'}
-                  >
-                    <span className="pulse-indicator pulse-cyan" />
-                    <span className="dropdown-item-text">Open for Job</span>
-                    {workStatus === 'open' && <Check size={14} className="dropdown-check text-cyan-400" />}
-                  </button>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                <AnimatePresence>
+                  {isDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -6, scale: 0.96 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -6, scale: 0.96 }}
+                      transition={{ duration: 0.18, ease: 'easeOut' }}
+                      className="status-dropdown-menu glass-panel"
+                      role="listbox"
+                    >
+                      <button
+                        type="button"
+                        className={`dropdown-menu-item ${workStatus === 'working' ? 'selected' : ''}`}
+                        onClick={() => handleStatusChange('working')}
+                        role="option"
+                        aria-selected={workStatus === 'working'}
+                      >
+                        <span className="pulse-indicator pulse-green" />
+                        <span className="dropdown-item-text">Currently Working as a SQA Engineer</span>
+                        {workStatus === 'working' && <Check size={14} className="dropdown-check text-emerald-400" />}
+                      </button>
+
+                      <button
+                        type="button"
+                        className={`dropdown-menu-item ${workStatus === 'open' ? 'selected' : ''}`}
+                        onClick={() => handleStatusChange('open')}
+                        role="option"
+                        aria-selected={workStatus === 'open'}
+                      >
+                        <span className="pulse-indicator pulse-cyan" />
+                        <span className="dropdown-item-text">Open for Job</span>
+                        {workStatus === 'open' && <Check size={14} className="dropdown-check text-cyan-400" />}
+                      </button>
+
+                      <div className="dropdown-divider" />
+                      <button
+                        type="button"
+                        onClick={handleAdminLogout}
+                        className="dropdown-menu-item admin-logout-item"
+                        title="Lock Admin Mode"
+                      >
+                        <Lock size={13} className="text-slate-400" />
+                        <span className="dropdown-item-text text-slate-400">Lock Admin Mode</span>
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </>
+            ) : (
+              /* VISITOR VIEW: Clean, live status badge with lock indicator (read-only for visitors) */
+              <button
+                type="button"
+                onClick={() => setShowAdminModal(true)}
+                className={`status-pill status-readonly-btn ${workStatus === 'working' ? 'status-working' : 'status-open-job'}`}
+                title="Sojib Ahmed's Live Availability (Portfolio Owner? Click to edit)"
+              >
+                <span className={`pulse-indicator ${workStatus === 'working' ? 'pulse-green' : 'pulse-cyan'}`} />
+                <span className="status-pill-text">
+                  {workStatus === 'working' ? 'Currently Working as a SQA Engineer' : 'Open for Job'}
+                </span>
+                <span className="status-owner-lock" title="Owner Managed Status">
+                  <Lock size={12} />
+                </span>
+              </button>
+            )}
           </div>
         </div>
 
@@ -1004,6 +1134,62 @@ const App = () => {
               </p>
             </div>
           </div>
+
+          {/* Undergraduate Final Year Defense Capstone Card */}
+          <div className="edu-card glass-panel edu-capstone-card">
+            <div className="edu-icon-wrap" style={{ color: '#0ea5e9' }}>
+              <Smartphone size={24} />
+            </div>
+            <div className="edu-card-body">
+              <div className="edu-top-row">
+                <span className="edu-period">Final Year Defense Project &bull; CSE 4801</span>
+                <span className="capstone-badge">Undergraduate Capstone</span>
+              </div>
+              <h3 className="edu-degree">ShebaAI — Intelligent Mobile Healthcare Companion</h3>
+              <p className="edu-institution">
+                Leading University, Sylhet &bull; Supervised by <strong>Md. Jehadul Islam Mony</strong> (Assistant Professor, Dept. of CSE)
+              </p>
+              <p className="edu-note">
+                An AI-driven mobile healthcare ecosystem built with Flutter, Django REST framework, and Google Gemini AI. Leverages an OCR AI engine to read handwritten doctor prescriptions, automatically maps medicines to an e-commerce cart, schedules automated dosage reminders via push notifications, and provides preliminary AI skin condition diagnostics.
+              </p>
+
+              <div className="edu-tech-chips">
+                <span className="edu-chip">Flutter &amp; Dart</span>
+                <span className="edu-chip">Python &amp; Django REST</span>
+                <span className="edu-chip">Google Gemini AI</span>
+                <span className="edu-chip">OCR Engine</span>
+                <span className="edu-chip">Riverpod State Management</span>
+                <span className="edu-chip">Mobile QA</span>
+              </div>
+
+              <div className="edu-links-row">
+                <a
+                  href="https://github.com/Noctambulist007/Sheba_AI"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="edu-action-link"
+                >
+                  <Github size={15} /> GitHub Repository <ArrowUpRight size={14} />
+                </a>
+                <a
+                  href="https://github.com/Noctambulist007/Sheba_AI/releases/tag/Final_Year_Defense_Project"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="edu-action-link edu-download-link"
+                >
+                  <Download size={15} /> Download Android APK (v1.0) <ArrowUpRight size={14} />
+                </a>
+                <a
+                  href="https://github.com/Noctambulist007/Sheba_AI/tags"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="edu-action-link"
+                >
+                  <ExternalLink size={15} /> Release Tags
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1078,6 +1264,68 @@ const App = () => {
           </div>
         </motion.div>
       </section>
+
+      {/* Admin Authentication Modal */}
+      <AnimatePresence>
+        {showAdminModal && (
+          <div className="admin-modal-overlay" onClick={() => setShowAdminModal(false)}>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.94, y: 15 }}
+              transition={{ duration: 0.2 }}
+              className="admin-modal-card glass-panel"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="admin-modal-header">
+                <div className="admin-modal-icon">
+                  <Lock size={22} className="text-cyan-400" />
+                </div>
+                <div>
+                  <h3 className="admin-modal-title">Portfolio Owner Access</h3>
+                  <p className="admin-modal-sub">Only Sojib Ahmed can modify this employment status.</p>
+                </div>
+                <button
+                  type="button"
+                  className="admin-modal-close"
+                  onClick={() => setShowAdminModal(false)}
+                  aria-label="Close modal"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <form onSubmit={handleAdminUnlock} className="admin-modal-form">
+                <label className="admin-input-label">Enter Secret Admin PIN:</label>
+                <div className="admin-input-wrap">
+                  <Key size={16} className="admin-input-icon text-cyan-400" />
+                  <input
+                    type="password"
+                    placeholder="Enter PIN (e.g. 7700)..."
+                    value={adminPinInput}
+                    onChange={(e) => {
+                      setAdminPinInput(e.target.value);
+                      setAdminError('');
+                    }}
+                    className="admin-pin-input"
+                    autoFocus
+                  />
+                </div>
+                {adminError && <p className="admin-error-text">{adminError}</p>}
+
+                <div className="admin-modal-actions">
+                  <button type="button" onClick={() => setShowAdminModal(false)} className="btn-secondary">
+                    Cancel
+                  </button>
+                  <button type="submit" className="btn-primary">
+                    <Unlock size={16} /> Unlock Status
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Realtime Status Sync Toast */}
       <AnimatePresence>
