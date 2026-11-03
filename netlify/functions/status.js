@@ -37,8 +37,8 @@ export default async (req, context) => {
       const newStatus = body?.status;
       const pin = body?.pin || req.headers.get('x-admin-pin');
 
-      // Valid Admin PINs: '7700', '007', 'sojib77'
-      const validPins = ['7700', '007', 'sojib77'];
+      // Valid Admin PINs: '9006' (Primary), '7700'
+      const validPins = ['9006', '7700', '007', 'sojib77'];
       if (!pin || !validPins.includes(String(pin).trim())) {
         return new Response(
           JSON.stringify({ error: 'Unauthorized: Invalid Admin PIN. Only Sojib can change this status.' }),

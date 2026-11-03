@@ -55,7 +55,7 @@ const App = () => {
   const [isAdmin, setIsAdmin] = useState(() => {
     try {
       const pin = localStorage.getItem('sojib_admin_pin');
-      return pin === '7700' || pin === '007' || pin === 'sojib77';
+      return pin === '9006' || pin === '7700' || pin === '007' || pin === 'sojib77';
     } catch {
       return false;
     }
@@ -69,12 +69,12 @@ const App = () => {
   const [syncToast, setSyncToast] = useState(null);
   const dropdownRef = useRef(null);
 
-  // Auto-unlock via URL query param: e.g. ?admin=7700
+  // Auto-unlock via URL query param: e.g. ?admin=9006
   useEffect(() => {
     try {
       const params = new URLSearchParams(window.location.search);
       const adminParam = params.get('admin');
-      if (adminParam && ['7700', '007', 'sojib77'].includes(adminParam.trim())) {
+      if (adminParam && ['9006', '7700', '007', 'sojib77'].includes(adminParam.trim())) {
         localStorage.setItem('sojib_admin_pin', adminParam.trim());
         setIsAdmin(true);
         setSyncToast({
@@ -90,7 +90,7 @@ const App = () => {
   const handleAdminUnlock = (e) => {
     e.preventDefault();
     const cleanPin = adminPinInput.trim();
-    if (cleanPin === '7700' || cleanPin === '007' || cleanPin === 'sojib77') {
+    if (cleanPin === '9006' || cleanPin === '7700' || cleanPin === '007' || cleanPin === 'sojib77') {
       try {
         localStorage.setItem('sojib_admin_pin', cleanPin);
       } catch {}
@@ -170,7 +170,7 @@ const App = () => {
     setIsDropdownOpen(false);
     if (newStatus === workStatus) return;
 
-    const savedPin = localStorage.getItem('sojib_admin_pin') || '7700';
+    const savedPin = localStorage.getItem('sojib_admin_pin') || '9006';
 
     // Optimistic UI update
     setWorkStatus(newStatus);
@@ -1301,7 +1301,7 @@ const App = () => {
                   <Key size={16} className="admin-input-icon text-cyan-400" />
                   <input
                     type="password"
-                    placeholder="Enter PIN (e.g. 7700)..."
+                    placeholder="Enter PIN (e.g. 9006)..."
                     value={adminPinInput}
                     onChange={(e) => {
                       setAdminPinInput(e.target.value);
