@@ -383,52 +383,51 @@ const App = () => {
     }
   ];
 
-  // Enhanced & Beautiful Technical Skills Architecture (Normal Clean Chips)
+  // Enhanced & Beautiful Technical Skills Architecture (6 Equal Categories)
   const skillCategories = [
     {
       id: 'qa',
-      title: 'Manual & Functional QA Methodologies',
-      subtitle: 'Comprehensive Test Design, Execution & Validation',
+      title: 'Manual & Exploratory QA',
+      subtitle: 'Test Design, Execution & Defect Verification',
       accentColor: '#38bdf8',
       icon: <ShieldCheck size={26} className="text-cyan-400" />,
-      featured: true,
       skills: [
         'Manual Functional Testing',
         'Regression & Retesting',
         'Boundary Value Analysis',
-        'Smoke & Sanity Testing',
-        'RTL (Arabic) Localization QA',
-        'Root Cause & Defect Triage',
-        'Exploratory & Ad-hoc Testing',
-        'Cross-Browser UI Consistency'
+        'Smoke & Sanity Verification',
+        'RTL Localization QA',
+        'Ad-hoc & Exploratory Testing'
       ]
     },
     {
       id: 'mobile',
-      title: 'Mobile QA & Multi-Platform Testing',
+      title: 'Mobile QA & Multi-Platform',
       subtitle: 'Native App & Mobile Browser Verification',
       accentColor: '#a855f7',
       icon: <Smartphone size={26} className="text-purple-400" />,
       skills: [
         'Apple TestFlight iOS Builds',
         'Branded Android APKs',
-        'Deep Link URL Redirection',
+        'Deep Link URL Routing',
         'Mobile Viewport & Gestures',
-        'Device Hardware Permissions (Camera/Mic)'
+        'Device Hardware Permissions',
+        'Multi-Device Responsiveness'
       ]
     },
     {
       id: 'api',
-      title: 'API Testing & Network Inspection',
+      title: 'API Testing & Inspection',
       subtitle: 'RESTful Payload & Status Verification',
       accentColor: '#3b82f6',
       icon: <Terminal size={26} className="text-blue-400" />,
       skills: [
         'Postman API Testing',
-        'REST API Endpoint Testing',
+        'REST API Endpoint Verification',
         'HTTP Status Codes (404, 422, 500)',
-        'JSON Data Structure Validation',
-        'Chrome DevTools Network Panel'
+        'JSON Schema & Data Validation',
+        'DevTools Network Inspection',
+        'Request / Response Payloads'
       ]
     },
     {
@@ -439,25 +438,41 @@ const App = () => {
       icon: <FileSpreadsheet size={26} className="text-emerald-400" />,
       skills: [
         'Trello Ticket Lifecycle (116+ Cards)',
+        'Test Suites (Google Sheets)',
         'Cross-Functional Agile Teamwork',
-        'Daily Standups & Sprint Collaboration',
-        'Test Cases & Test Suites (Google Sheets)',
-        'Bug Life Cycle & Root Cause Triage',
+        'Daily Standups & Sprint SQA',
+        'Defect Reproduction Evidence',
         'Git & GitHub Version Control'
       ]
     },
     {
       id: 'automation',
-      title: 'Test Automation (Foundations & Learning)',
-      subtitle: 'Starting Test Automation Journey with Playwright & Scripting',
+      title: 'Test Automation (Foundations)',
+      subtitle: 'Automated E2E Checks with Playwright',
       accentColor: '#f59e0b',
       icon: <Code2 size={26} className="text-amber-400" />,
       skills: [
-        'Playwright E2E Automation (Basics/Beginner)',
-        'Basic UI & Navigation Assertions',
+        'Playwright E2E Testing (Beginner)',
         'TypeScript & JavaScript (ES6+)',
-        'HTML5, CSS3 & DOM Selectors',
-        'VS Code & Git Workflows'
+        'Basic UI & Locator Assertions',
+        'Page Object Model (POM) Basics',
+        'Trace Viewer & Debugging',
+        'Automated Regression Checks'
+      ]
+    },
+    {
+      id: 'engineering',
+      title: 'Web Engineering & DevTools',
+      subtitle: 'CS Foundations Supporting SQA Depth',
+      accentColor: '#ec4899',
+      icon: <Layers size={26} className="text-pink-400" />,
+      skills: [
+        'Chrome DevTools DOM & Console',
+        'React & Web Architecture',
+        'Database & SQL Query Basics',
+        'Responsive Layout Auditing',
+        'Network Payload Inspection',
+        'Object-Oriented Programming (OOP)'
       ]
     }
   ];
@@ -607,7 +622,7 @@ const App = () => {
                   aria-expanded={isDropdownOpen}
                   title="Admin Mode Active: Click to update your status"
                 >
-                  <span className={`pulse-indicator ${isSyncing ? 'pulse-syncing' : workStatus === 'working' ? 'pulse-green' : 'pulse-cyan'}`} />
+                  <span className={`pulse-indicator ${isSyncing ? 'pulse-syncing' : workStatus === 'working' ? 'pulse-green' : 'pulse-red'}`} />
                   <span className="status-pill-text">
                     {workStatus === 'working' ? 'Currently Working as a SQA Engineer' : 'Open for Job'}
                   </span>
@@ -639,14 +654,14 @@ const App = () => {
 
                       <button
                         type="button"
-                        className={`dropdown-menu-item ${workStatus === 'open' ? 'selected' : ''}`}
+                        className={`dropdown-menu-item ${workStatus === 'open' ? 'selected-red' : ''}`}
                         onClick={() => handleStatusChange('open')}
                         role="option"
                         aria-selected={workStatus === 'open'}
                       >
-                        <span className="pulse-indicator pulse-cyan" />
+                        <span className="pulse-indicator pulse-red" />
                         <span className="dropdown-item-text">Open for Job</span>
-                        {workStatus === 'open' && <Check size={14} className="dropdown-check text-cyan-400" />}
+                        {workStatus === 'open' && <Check size={14} className="dropdown-check text-rose-400" />}
                       </button>
 
                       <div className="dropdown-divider" />
@@ -671,7 +686,7 @@ const App = () => {
                 className={`status-pill status-readonly-btn ${workStatus === 'working' ? 'status-working' : 'status-open-job'}`}
                 title="Sojib Ahmed's Live Availability (Portfolio Owner? Click to edit)"
               >
-                <span className={`pulse-indicator ${workStatus === 'working' ? 'pulse-green' : 'pulse-cyan'}`} />
+                <span className={`pulse-indicator ${workStatus === 'working' ? 'pulse-green' : 'pulse-red'}`} />
                 <span className="status-pill-text">
                   {workStatus === 'working' ? 'Currently Working as a SQA Engineer' : 'Open for Job'}
                 </span>
@@ -779,31 +794,35 @@ const App = () => {
             </h3>
 
             <p className="about-bio-text">
-              I am a Computer Science &amp; Engineering graduate from <strong>Leading University, Sylhet</strong> with genuine dedication to <strong>Software Quality Assurance</strong> and hands-on, real-world production experience gained during my internship at <strong>Appifylab</strong>.
+              I am a Computer Science &amp; Engineering graduate from <strong>Leading University, Sylhet</strong> with genuine dedication to <strong>Software Quality Assurance</strong> and hands-on, real-world production experience gained during my intensive internship at <strong>Appifylab</strong>.
             </p>
 
             <p className="about-bio-text">
-              My philosophy toward software quality is simple: <em>"Think like an everyday user, test like a creative adversary, and document like a seasoned software engineer."</em> Quality assurance is more than executing predefined test cases—it is about anticipating user friction, exploring unforeseen edge cases, and ensuring digital products perform reliably under all real-world conditions.
+              My core testing philosophy is simple: <em>"Think like an everyday user, test like a creative adversary, and document with engineering precision."</em> QA is more than executing static checklists—it is about anticipating user friction, validating multi-tenant edge cases, and ensuring web and mobile apps perform reliably under real-world network and device conditions.
             </p>
 
             <p className="about-bio-text">
-              At Appifylab, I took full ownership of defect reporting and verification across <strong>EzyCourse (LMS platform)</strong> and <strong>EzyCommunity (Web, iOS &amp; Android)</strong>. From documenting and verifying <strong>116+ defect tickets on Trello</strong> with step-by-step reproduction and video evidence, to testing branded iOS TestFlight builds and inspecting RESTful API payloads in Postman, I collaborated closely with developers in fast-paced agile cycles.
+              At Appifylab, I managed end-to-end defect tracking across <strong>EzyCourse (LMS platform)</strong> and <strong>EzyCommunity (Web, iOS &amp; Android)</strong>, verifying <strong>116+ defect tickets on Trello</strong>. Leveraging my CS background, I trace issues to their source using Chrome DevTools and Postman API payload validation—partnering closely with developers in fast agile sprint cycles to ship robust code.
             </p>
 
-            <p className="about-bio-text">
-              My strong Computer Science background in JavaScript, React, and web architecture gives me an investigative edge. When a defect arises, I don't just report what is visible—I inspect Chrome DevTools, analyze network payloads (404, 422, 500 errors), and identify root causes so engineering teams can resolve them rapidly.
-            </p>
-
-            <p className="about-bio-text">
-              <strong>Agile Collaboration &amp; Teamwork:</strong> Great software is forged through cross-functional teamwork. At Appifylab, I worked side-by-side with frontend, backend, and mobile engineers in daily standups and sprint planning. Rather than treating QA as a silo, I actively partnered with developers to clarify user stories, reproduce elusive edge cases together, and ensure bug fixes were verified thoroughly before staging and production deployments.
-            </p>
-
-            <p className="about-bio-text">
-              While my core foundation lies in <strong>rigorous manual testing, exploratory testing, and API inspection</strong>, I am actively expanding into <strong>test automation</strong>—starting out with <strong>Playwright &amp; TypeScript</strong> to build foundational automated checks for core regression workflows.
-            </p>
+            {/* Bottom Key Highlights Strip for Perfect Visual Balance */}
+            <div className="about-metrics-strip">
+              <div className="about-metric-pill">
+                <ShieldCheck size={16} className="text-cyan-400" />
+                <span>116+ Defect Tickets Verified</span>
+              </div>
+              <div className="about-metric-pill">
+                <Smartphone size={16} className="text-purple-400" />
+                <span>Web, iOS (TestFlight) &amp; Android</span>
+              </div>
+              <div className="about-metric-pill">
+                <Users size={16} className="text-pink-400" />
+                <span>Agile Team Collaboration</span>
+              </div>
+            </div>
           </motion.div>
 
-          {/* Right Column: QA Pillars */}
+          {/* Right Column: QA Pillars (2-column symmetrical mini-cards) */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -813,11 +832,11 @@ const App = () => {
           >
             {qaPillars.map((pillar, idx) => (
               <div key={idx} className="pillar-card glass-panel">
-                <div className="pillar-icon-wrap">{pillar.icon}</div>
-                <div>
+                <div className="pillar-header-row">
+                  <div className="pillar-icon-wrap">{pillar.icon}</div>
                   <h4 className="pillar-title">{pillar.title}</h4>
-                  <p className="pillar-desc">{pillar.desc}</p>
                 </div>
+                <p className="pillar-desc">{pillar.desc}</p>
               </div>
             ))}
           </motion.div>
@@ -1050,10 +1069,10 @@ const App = () => {
             Industry-standard manual testing techniques, mobile lab verifications, API inspection, and modern tooling.
           </p>
 
-          {/* Featured Tools & Technologies Badge Ribbon */}
+          {/* Featured Tools & Technologies Badge Ribbon (Topological Flow Marquee) */}
           <div className="tools-ribbon-wrap">
-            <div className="tools-ribbon">
-              {toolsRibbon.map((tool, idx) => (
+            <div className="tools-ribbon-track">
+              {[...toolsRibbon, ...toolsRibbon].map((tool, idx) => (
                 <div key={idx} className="tool-ribbon-item">
                   <span className="tool-ribbon-icon" style={{ color: tool.color }}>
                     {tool.icon}
@@ -1065,12 +1084,12 @@ const App = () => {
           </div>
         </div>
 
-        {/* Bento Grid Architecture for Skills */}
+        {/* Equal 6-Card Grid Architecture for Skills */}
         <div className="skills-bento-grid">
           {skillCategories.map((cat) => (
             <div
               key={cat.id}
-              className={`skill-bento-card glass-panel ${cat.featured ? 'bento-featured' : ''}`}
+              className="skill-bento-card glass-panel"
             >
               <div className="skill-bento-header">
                 <div
@@ -1150,43 +1169,37 @@ const App = () => {
                 Leading University, Sylhet &bull; Supervised by <strong>Md. Jehadul Islam Mony</strong> (Assistant Professor, Dept. of CSE)
               </p>
               <p className="edu-note">
-                An AI-driven mobile healthcare ecosystem built with Flutter, Django REST framework, and Google Gemini AI. Leverages an OCR AI engine to read handwritten doctor prescriptions, automatically maps medicines to an e-commerce cart, schedules automated dosage reminders via push notifications, and provides preliminary AI skin condition diagnostics.
+                An intelligent healthcare ecosystem engineered to bridge modern mobile architecture, server-side APIs, and neural machine learning. Successfully completed and defended before the Department of CSE Board of Examiners.
               </p>
 
-              <div className="edu-tech-chips">
+              <div className="edu-capstone-highlights">
+                <div className="capstone-point">
+                  <span className="point-bullet" />
+                  <div>
+                    <strong>OCR Prescription Digitization:</strong> Integrated an image recognition pipeline to parse doctor handwritten prescriptions into an automated digital pharmacy cart.
+                  </div>
+                </div>
+                <div className="capstone-point">
+                  <span className="point-bullet" />
+                  <div>
+                    <strong>Gemini AI Health Assistant:</strong> Leveraged Google Gemini AI models to provide interactive patient wellness guidance, dosage schedules, and automated push notification reminders.
+                  </div>
+                </div>
+                <div className="capstone-point">
+                  <span className="point-bullet" />
+                  <div>
+                    <strong>Rigorous Mobile &amp; API QA:</strong> Executed comprehensive functional, boundary, and responsive testing across multiple Android viewports, simulating offline scenarios, push notifications, and network latency on RESTful endpoints.
+                  </div>
+                </div>
+              </div>
+
+              <div className="edu-tech-chips" style={{ marginBottom: 0, marginTop: '1.15rem' }}>
                 <span className="edu-chip">Flutter &amp; Dart</span>
                 <span className="edu-chip">Python &amp; Django REST</span>
                 <span className="edu-chip">Google Gemini AI</span>
                 <span className="edu-chip">OCR Engine</span>
                 <span className="edu-chip">Riverpod State Management</span>
-                <span className="edu-chip">Mobile QA</span>
-              </div>
-
-              <div className="edu-links-row">
-                <a
-                  href="https://github.com/Noctambulist007/Sheba_AI"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="edu-action-link"
-                >
-                  <Github size={15} /> GitHub Repository <ArrowUpRight size={14} />
-                </a>
-                <a
-                  href="https://github.com/Noctambulist007/Sheba_AI/releases/tag/Final_Year_Defense_Project"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="edu-action-link edu-download-link"
-                >
-                  <Download size={15} /> Download Android APK (v1.0) <ArrowUpRight size={14} />
-                </a>
-                <a
-                  href="https://github.com/Noctambulist007/Sheba_AI/tags"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="edu-action-link"
-                >
-                  <ExternalLink size={15} /> Release Tags
-                </a>
+                <span className="edu-chip">Mobile QA &amp; API Testing</span>
               </div>
             </div>
           </div>
@@ -1301,7 +1314,7 @@ const App = () => {
                   <Key size={16} className="admin-input-icon text-cyan-400" />
                   <input
                     type="password"
-                    placeholder="Enter PIN (e.g. 9006)..."
+                    placeholder="••••••••"
                     value={adminPinInput}
                     onChange={(e) => {
                       setAdminPinInput(e.target.value);
