@@ -246,12 +246,12 @@ const App = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Stats: 3 High-Impact Cards (Updated: Full Defect Lifecycle, Real-Time SaaS QA & Dedicated SQA Mindset)
+  // Stats: 3 High-Impact Cards (Cross-Platform, Real-Time SaaS QA, Full-Lifecycle Defect Management)
   const stats = [
     {
-      value: '116+',
-      label: 'Defects Reported & Resolved',
-      sub: 'End-to-End Defect Lifecycle on Trello (Staging & Live)'
+      value: 'Cross-Platform',
+      label: 'Web, Mobile & API Testing',
+      sub: 'iOS TestFlight, Android APKs & RESTful Endpoints'
     },
     {
       value: 'Real-Time',
@@ -259,9 +259,9 @@ const App = () => {
       sub: 'Production Testing on EzyCourse & EzyCommunity'
     },
     {
-      value: '100%',
-      label: 'Dedicated to Quality Assurance',
-      sub: 'Meticulous Bug Hunting & User-Centric Verification'
+      value: 'Full-Lifecycle',
+      label: 'End-to-End Defect Management',
+      sub: 'Detailed Reproduction, Root-Cause Tracing & Retesting'
     }
   ];
 
@@ -809,7 +809,7 @@ const App = () => {
             <div className="about-metrics-strip">
               <div className="about-metric-pill">
                 <ShieldCheck size={16} className="text-cyan-400" />
-                <span>116+ Defect Tickets Verified</span>
+                <span>Production Defect Lifecycle &amp; Verification</span>
               </div>
               <div className="about-metric-pill">
                 <Smartphone size={16} className="text-purple-400" />
