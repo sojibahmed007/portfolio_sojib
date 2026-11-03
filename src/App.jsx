@@ -1132,7 +1132,7 @@ const App = () => {
               <span className="edu-period">2022 – 2026</span>
               <h3 className="edu-degree">B.Sc. in Computer Science &amp; Engineering</h3>
               <p className="edu-institution">Leading University, Sylhet, Bangladesh</p>
-              <div className="cgpa-pill">CGPA: 3.59 / 4.00</div>
+              <div className="cgpa-pill">CGPA: 3.59 / 4.00 &bull; Graduated</div>
               <p className="edu-note">
                 Relevant coursework: Software Engineering, Database Systems, Object-Oriented Programming, Data Structures, Algorithms, Computer Networks.
               </p>
@@ -1144,12 +1144,12 @@ const App = () => {
               <Sparkles size={24} />
             </div>
             <div>
-              <span className="edu-period">Student Branch</span>
+              <span className="edu-period">2022 – 2026 &bull; Completed</span>
               <h3 className="edu-degree">IEEE Computer Society</h3>
               <p className="edu-institution">Leading University Student Branch</p>
-              <div className="activity-pill">Active Member</div>
+              <div className="activity-pill">Former Local Member</div>
               <p className="edu-note">
-                Participated in technical seminars, coding hackathons, software engineering workshops, and collaborative problem-solving sessions.
+                Served as a local student branch member during undergraduate studies; actively participated in university technical seminars, coding events, software engineering workshops, and collaborative problem-solving sessions.
               </p>
             </div>
           </div>
